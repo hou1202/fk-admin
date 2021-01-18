@@ -167,7 +167,7 @@ export default {
         workLicenseFile:'',   //施工许可证附件
         tranApplyFile:'',     //运输申请函附件
         otherFile:'',         //其他附件
-        
+
         absorptiveId:'',      //消纳场ID
         submitTranRoad:'',    //提交外运线路
         absorptiveProveFile:'',   //消纳场证明附件
@@ -196,6 +196,24 @@ export default {
       this.applyData.tranStartDate = this.selectTranDate[0];
       this.applyData.tranEndDate = this.selectTranDate[1];
     },
+    
+    /* 图片上传相关方法*/
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {    //上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    }
+    
     getList() {
 
     },
