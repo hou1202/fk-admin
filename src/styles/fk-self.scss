@@ -2,8 +2,27 @@
  *这里是针对具体的项目设置的具体样式信息
  * */
 @import './fk-variables.scss';
+//公用字体颜色
+.color-blue {
+  color: #409EFF !important;
+}
+.color-green {
+  color: #67C23A !important;
+}
+.color-yellow {
+  color: #E6A23C !important;
+}
+.color-red {
+  color: #F56C6C !important;
+}
+.color-default {
+  color: #909399 !important;
+}
+.color-cyan {
+  color: #7ff6ef !important;
+}
 
-//搜索区
+//弹层搜索区
 .self-search-item {
   margin-right: 20px;
 
@@ -74,6 +93,7 @@
 .el-form {
   .el-form-item {
     display: inline-block;
+    margin-bottom: 15px;
 
     .el-form-item__label {
       padding-right: 20px;
@@ -85,8 +105,8 @@
       display: inline-block;
       margin-left: 0 !important;
 
-      .el-input, .el-textarea {
-        width: 350px;
+      .el-input, .el-textarea, .el-date-editor, .el-select {
+        width: 100%;
       }
       .el-input {
         input {
@@ -107,31 +127,415 @@
         border-radius: 3px;
         border-left: 1px solid #dcdfe6;
       }
+      /* 自定义的a标签，在图片上传时，提供下载模板链接*/
+      a {
+        display: block;
+        font-size: 12px;
+        color: #46a6ff;
+        position: absolute;
+        left: -68px;
+        top: 24px;
+      }
+    }
+  }
+
+  /* .el-form-item-img {
+    width: 100%;
+    .el-form-item__content {
+      width: auto;
+    }
+
+  } */
+
+  /* 上传图片区域表单-单图*/
+  .form-item-single_img {
+    padding: 0 50px;
+    width: 100%;
+    overflow: hidden;
+
+    .el-form-item {
+      width: 20%;
+
+      .el-form-item__label {
+        float: none;
+        padding: 0;
+        line-height: 45px;
+      }
+      .el-form-item__content {
+        display: block;
+        width:auto;
+      }
+    }
+  }
+
+  //带点击的表单
+  .el-form-item-click {
+    display: inline-block;
+    cursor: pointer;
+
+    .el-input__inner{
+      cursor: pointer
+    }
+  }
+}
+/* form-item 为单行显示*/
+.form-single {
+  .el-form-item {
+    display: block;
+    .el-form-item__content {
+      width:550px;
+    }
+  }
+}
+/* 操作功能区 */
+.self-func {
+  /* border-bottom: 1px solid #d8dce5;
+  webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04); */
+  .el-button,.el-button--primary {
+    margin-right: 10px;
+    background-color: #4c8ac3;
+  }
+  .el-button--primary:hover {
+    background: #46a6ff;
+    font-weight: 800;
+  }
+}
+/* 搜索区 */
+.self-search {
+  position: relative;
+  .filter-item {
+    width: 200px;
+    margin-right: 10px;
+
+    .el-input__inner {
+      height: 33px;
+      line-height: 33px;
+
+      .el-input__icon {
+        line-height: 33px;
+      }
+    }
+  }
+  .el-button {
+    padding: 9px 15px;
+    position: absolute;
+  }
+  .search-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 2px;
+    right: 1px;
+    padding: 5px;
+    .search-icon-hid {
+      display:block;
+      width: 100%;
+      height: 100%;
+      background:url(../assets/search-hid.png) no-repeat;
+      background-size: 100%;
+    }
+    .search-icon-open {
+      display:block;
+      width: 100%;
+      height: 100%;
+      background:url(../assets/search-open.png) no-repeat;
+      background-size: 100%;
+    }
+  }
+}
+/* 图片上传 */
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: $uploadBoxSize;
+  height: $uploadBoxSize;
+  line-height: $uploadBoxSize;
+  text-align: center;
+}
+.avatar {
+  width: $uploadBoxSize;
+  height: $uploadBoxSize;
+  display: block;
+}
+.el-upload--picture-card {
+  font-size: 28px;
+  color: #8c939d;
+  width: $uploadBoxSize;
+  height: $uploadBoxSize;
+  line-height: $uploadBoxSize;
+  text-align: center;
+  background: #fff;
+}
+.el-upload-list {
+  overflow: hidden;
+  height: $uploadBoxSize;
+  .el-upload-list__item {
+    font-size: 28px;
+    color: #8c939d;
+    width: $uploadBoxSize;
+    height: $uploadBoxSize;
+    line-height: 20px;
+    text-align: center;
+    margin:0 8px 0 0;
+
+    .el-upload-list__item-actions {
+      .el-upload-list__item-preview {
+        display: none;
+      }
+      .el-upload-list__item-delete {
+        margin: 0;
+      }
+    }
+  }
+}
+.hideUpload {
+  height: $uploadBoxSize;
+  .el-upload--picture-card {
+    display: none;
+  }
+}
+
+
+/* table表单 */
+.el-table {
+  .el-table__header-wrapper { //表头
+    font-size: 14px;
+    .el-table__header {
+      .has-gutter {
+        tr {
+          th {
+            text-align: center;
+            padding: 8px 0;
+          }
+        }
+      }
+    }
+  }
+  .el-table__body-wrapper { //表格
+    .el-table__body {
+      .el-table__row {
+        font-size: 13px;
+        td {
+          text-align: center;
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+}
+.fk-table {
+  .el-table__header-wrapper {
+    .el-table__header {
+      .has-gutter {
+        tr {
+          th {
+            background-color: #f3f3f3 !important;
+          }
+        }
+      }
     }
   }
 }
 
-/* 图片上传 */
-.avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
+/* 百度地图样式，隐藏标签 */
+.anchorBL {
+  display:none;
+}
+
+
+/* 自定义table表单 */
+.self-table {
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+  margin:10px 0;
+
+  .self-th {
+    width: 100%;
+    border: 1px solid #dfe6ec;
     overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
     text-align: center;
+    font-weight: 700;
+    color: #606266;
+
+    p{
+      margin: 0;
+      line-height: 45px;
+    }
   }
-  .avatar {
-    width: 50px;
-    height: 50px;
-    display: block;
+
+  .self-td {
+    width: 33.33%;
+    border: 1px solid #dfe6ec;
+    overflow: hidden;
+    float: left;
+
+    .self-td-title {
+      width: 105px;
+      text-align: center;
+      border-right: 2px solid #dfe6ec;
+      background-color: #f3f3f3;
+      font-weight: 600;
+      color: #909399;
+      line-height: 35px;
+      display: inline-block;
+      float:left;
+      margin: 0;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+
+    .self-td-cont {
+      width:calc(100% - 105px);
+      text-align: left;
+      color: #606266;
+      padding-left: 5px;
+      float:left;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      p {
+        line-height: 35px;
+        margin: 0;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .self-td-cont:hover {
+      background: #F2F6FC;
+      cursor: default;
+      /* overflow: visible; */
+    }
+
   }
+  .self-td-img {
+    .self-td-title {
+      line-height: 70px;
+    }
+  }
+}
+
+.self-img {
+  display:inline-block;
+  .el-image {
+    .el-image__inner {
+      width: 60px;
+      height: 60px;
+      border: 1px solid #dfe6ec;
+      border-radius: 3px;
+      margin: 5px 0 2px 5px;
+    }
+    .el-image__error {
+      width: 60px;
+      height: 60px;
+      border: 1px solid #dfe6ec;
+      border-radius: 3px;
+      margin: 5px 0 2px 5px;
+    }
+  }
+}
+
+.self-table-two {
+  .self-td {
+    width: 50%;
+    .self-td-title {
+      width: 150px;
+    }
+    .self-td-cont {
+      width: calc(100% - 150px);
+      }
+  }
+}
+
+/* 百度地图样式重定义——信息窗体 */
+.BMap_bubble_pop {
+  width: 350px !important;
+
+  .BMap_bubble_top {
+    //margin-top: 10px;
+    height: 50px !important;
+    line-height: 50px;
+    padding-top: 10px;
+    border-bottom: 1px solid #EBEEF5;
+    .BMap_bubble_title {
+      height: 40px !important;
+      line-height: 40px !important;
+      padding-left: 10px;
+      width:100% !important;
+      color: #409EFF !important;
+      font-weight: bold;
+    }
+    .BMap_bubble_buttons {
+      top: 10px !important;
+      right: 10px !important;
+      height: 25px !important;
+      div:last-child {
+        width: 25px !important;
+        height: 25px !important;
+        div {
+          top: 0 !important;
+          right: 0 !important;
+          width: 25px !important;
+          height: 25px;
+          line-height: 25px !important;
+          border: 1px solid #ccc;
+          border-radius: 50%;
+          color: #C0C4CC !important;
+        }
+        div:hover {
+          color: #409EFF !important;
+          border: 1px solid #409EFF;
+        }
+      }
+    }
+  }
+
+  .BMap_bubble_center {
+    width:100% !important;
+    margin: 10px 0;
+
+    .BMap_bubble_content {
+      width:100% !important;
+      top: 0 !important;
+
+      p{
+        margin: 5px 0;
+        line-height: 20px;
+        color: #909399;
+        label {
+          color: #79BBFF;
+        }
+      }
+    }
+  }
+
+  .BMap_bubble_bottom {
+    width:100% !important;
+  }
+
+  img {
+    width: 20px !important;
+    height: 10px !important;
+
+    position: absolute;
+    top: 100%  !important;
+    bottom: -15px  !important;
+
+
+  }
+}

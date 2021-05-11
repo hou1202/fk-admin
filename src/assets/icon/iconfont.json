@@ -1,0 +1,107 @@
+{
+  "id": "2456124",
+  "name": "dregs",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "渣土项目",
+  "glyphs": [
+    {
+      "icon_id": "1569472",
+      "name": "视频监控",
+      "font_class": "-zt-jiankong",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "6671162",
+      "name": "线路参数",
+      "font_class": "-zt-tangci",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "20411152",
+      "name": "覆土分析",
+      "font_class": "-zt-chutu",
+      "unicode": "e86c",
+      "unicode_decimal": 59500
+    },
+    {
+      "icon_id": "637340",
+      "name": "在建工地",
+      "font_class": "-zt-xiaona",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "5742902",
+      "name": "地图",
+      "font_class": "-zt-ditu",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "18953475",
+      "name": "面性工地",
+      "font_class": "-zt-gongdi",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "14443547",
+      "name": "任务",
+      "font_class": "-zt-renwu",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "21014025",
+      "name": "日期",
+      "font_class": "-zt-riqi",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "14698909",
+      "name": "报警",
+      "font_class": "-zt-bojin",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "18676088",
+      "name": "导航",
+      "font_class": "-zt-daohang",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "13221764",
+      "name": "更多",
+      "font_class": "-zt-gengduo",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "11082630",
+      "name": "看点-选中",
+      "font_class": "-zt-chakan",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "15729281",
+      "name": "货车",
+      "font_class": "-zt-huoche",
+      "unicode": "e6ff",
+      "unicode_decimal": 59135
+    },
+    {
+      "icon_id": "15730379",
+      "name": "货车-渣土车",
+      "font_class": "-zt-car",
+      "unicode": "e700",
+      "unicode_decimal": 59136
+    }
+  ]
+}

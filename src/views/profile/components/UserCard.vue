@@ -1,7 +1,7 @@
 <template>
   <el-card style="margin-bottom:20px;">
     <div slot="header" class="clearfix">
-      <span>About me</span>
+      <span>个人中心</span>
     </div>
 
     <div class="user-profile">
@@ -19,33 +19,31 @@
 
     <div class="user-bio">
       <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
+        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>执法编号</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            JS in Computer Science from the University of Technology
+            HNZT10015101
           </div>
         </div>
       </div>
 
       <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>Skills</span></div>
+        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>数据</span></div>
         <div class="user-bio-section-body">
+
           <div class="progress-item">
-            <span>Vue</span>
-            <el-progress :percentage="70" />
+            <span>待处理文件数</span>
+            <el-progress :percentage="100" status="success" />
           </div>
           <div class="progress-item">
-            <span>JavaScript</span>
+            <span>平均审批耗时</span>
             <el-progress :percentage="18" />
           </div>
           <div class="progress-item">
-            <span>Css</span>
+            <span>审批效率排行</span>
             <el-progress :percentage="12" />
           </div>
-          <div class="progress-item">
-            <span>ESLint</span>
-            <el-progress :percentage="100" status="success" />
-          </div>
+
         </div>
       </div>
     </div>
@@ -62,9 +60,9 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: '',
+          name: '信息科',
           email: '',
-          avatar: '',
+          avatar: '@/assets/favicon.png',
           role: ''
         }
       }
@@ -128,6 +126,9 @@ export default {
       padding-bottom: 10px;
       margin-bottom: 10px;
       font-weight: bold;
+    }
+    .progress-item {
+      margin-top:15px;
     }
   }
 }

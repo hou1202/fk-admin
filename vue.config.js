@@ -6,7 +6,9 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Element Admin' // page title
+const name = defaultSettings.title || 'Aoogi管理系统' // page title
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -38,9 +40,35 @@ module.exports = {
     },
     before: require('./mock/mock-server.js')
   },
+
+  /* devServer: {
+    port: port,
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    proxy: {
+      "/api": {
+        target: "http://192.168.2.136:7777/smallbird-new",
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "",
+        },
+      },
+    },
+  }, */
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
+    plugins: [
+      new CopyWebpackPlugin([
+          { from: 'node_modules/@liveqing/liveplayer/dist/component/crossdomain.xml'},
+          { from: 'node_modules/@liveqing/liveplayer/dist/component/liveplayer.swf'},
+          { from: 'node_modules/@liveqing/liveplayer/dist/component/liveplayer-lib.min.js', to: 'js/'}
+      ])
+    ],
     name: name,
     resolve: {
       alias: {

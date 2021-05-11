@@ -57,6 +57,26 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/forget',
+    component: () => import('@/views/login/forget'),
+    hidden: true
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/login/register'),
+    hidden: true
+  },
+  {
+    path: '/registerEnterprise',
+    component: () => import('@/views/login/registerEnterprise'),
+    hidden: true
+  },
+  {
+    path: '/registerCar',
+    component: () => import('@/views/login/registerCar'),
+    hidden: true
+  },
+  {
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
     hidden: true
@@ -110,6 +130,11 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
+  },
+  {
+    path: '/visualiView',
+    component: () => import('@/views/administrator/regulatory/Visualization'),
+    hidden: true
   }
 ]
 
@@ -126,7 +151,7 @@ export const asyncRoutes = [
     name: 'Transport',
     meta: {
       title: '运输作业',
-      icon: 'lock',
+      icon: 'lock'
     },
     children: [
       {
@@ -134,15 +159,15 @@ export const asyncRoutes = [
         component: () => import('@/views/administrator/transport/TransportTask'),
         name: 'TransportTask',
         meta: {
-          title: '运输任务',
-        },
+          title: '运输任务'
+        }
       },
       {
         path: 'card',
         component: () => import('@/views/administrator/transport/TransportCard'),
         name: 'TransportCard',
         meta: {
-          title: '准运证',
+          title: '准运证'
         }
       },
       {
@@ -150,30 +175,76 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/page'),
         name: 'AddTaskCar',
         meta: {
-          title: '增加车辆',
-        }
-      },
-      {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'Directive Permission'
-          // if do not set roles, means: this page does not require permission
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: 'Role Permission',
-          roles: ['admin']
+          title: '增加车辆'
         }
       }
     ]
   },
-
+  {
+    path: '/enterprise',
+    component: Layout,
+    redirect: '/enterprise/index',
+    name: 'Enterprise',
+    meta: {
+      title: '企业管理',
+      icon: 'lock'
+    },
+    children: [
+      {
+        path: 'enterpriseInfo',
+        component: () => import('@/views/administrator/enterprise/EnterpriseInfo'),
+        name: 'enterpriseInfo',
+        meta: {
+          title: '企业信息'
+        }
+      },
+      {
+        path: 'enterpriseChange',
+        component: () => import('@/views/administrator/enterprise/EnterpriseInfo'),
+        name: 'enterpriseChange',
+        meta: {
+          title: '信息变更'
+        }
+      }
+    ]
+  },
+  {
+    path: '/regulatory',
+    component: Layout,
+    redirect: '/regulatory/index',
+    name: 'Regulatory',
+    meta: {
+      title: '监管中心',
+      icon: 'el-icon-s-help'
+    },
+    children: [
+      {
+        path: 'regulatoryCar',
+        component: () => import('@/views/administrator/regulatory/RegulatoryCar'),
+        name: 'regulatoryCar',
+        meta: {
+          title: '车辆监管'
+        }
+      },
+      {
+        path: 'regulatorySite',
+        component: () => import('@/views/administrator/regulatory/RegulatorySite'),
+        name: 'regulatorySite',
+        meta: {
+          title: '工地监管'
+        }
+      },
+      {
+        path: '/visualization',
+        // component: () => import('@/views/administrator/regulatory/Visualization'),
+        redirect: '/visualiView',
+        name: 'visualization',
+        meta: {
+          title: '数据可视化'
+        }
+      }
+    ]
+  },
   {
     path: '/permission',
     component: Layout,
