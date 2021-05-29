@@ -1,0 +1,127 @@
+<template>
+  <div class="app-container">
+    <!-- 搜索、功能按钮模块-->
+    <div class="filter-container">
+
+      <div class="self-search">
+        <div v-if="showSearch">
+          <el-input v-model="searchData.siteName" placeholder="搜索工地名称" class="filter-item" @keyup.enter.native="handleSearch" />
+          <el-input v-model="searchData.absorName" placeholder="搜索消纳场名称" class="filter-item" @keyup.enter.native="handleSearch" />
+          <el-select v-model="searchData.tranType" placeholder="选择任务运输类型" clearable class="filter-item">
+            <el-option v-for="item in Object.entries(this.$selfJs.tranType)" :label="item[1]" :value="item[0]" />
+          </el-select>
+          <el-select v-model="searchData.tranStatus" placeholder="选择任务状态" clearable class="filter-item">
+            <el-option v-for="item in Object.entries(this.$selfJs.tranStatus)" :label="item[1]" :value="item[0]" />
+          </el-select>
+          <el-select v-model="searchData.approvalStatus" placeholder="选择任务审批状态" class="filter-item">
+            <el-option v-for="item in Object.entries(this.$selfJs.approvalStatus)" :label="item[1]" :value="item[0]" />
+          </el-select>
+          <el-button type="primary" size="mini" icon="el-icon-search" @click="handleSearch">
+            搜索
+          </el-button>
+          <div class="search-icon" @click="showSearch = false">
+            <i class="search-icon-hid" />
+          </div>
+        </div>
+        <div v-else class="search-icon" @click="showSearch = true">
+          <i class="search-icon-open" />
+        </div>
+      </div>
+
+      <div class="self-func">
+        <el-button class="filter-item" size="small" type="primary" @click="showNoticeAddCard = true">
+          新增公告
+        </el-button>
+      </div>
+
+    </div>
+
+    <!-- 列表模块-->
+    <el-table
+      v-loading="listLoading"
+      :data="datas"
+      border
+      highlight-current-row
+      style="width: 100%;"
+    >
+      <el-table-column label="序号" type="index" align="center" width="80" />
+      <el-table-column label="公告标题" align="center" prop="siteName" show-overflow-tooltip min-width="150" />
+      <el-table-column label="公告摘要" prop="absorName" show-overflow-tooltip min-width="150" />
+      <el-table-column label="发布时间" prop="applyDate" width="150" />
+      <el-table-column label="公告类型" prop="approvalStatus" :formatter="this.$selfJs.getTableText" width="150" />
+      <el-table-column label="操作" align="center" width="280px" class-name="small-padding fixed-width">
+        <template slot-scope="{row,$index}">
+          <el-button size="mini" type="primary" @click="handleRead(row)">
+            查看
+          </el-button>
+          <el-button type="success" size="mini" @click="handleUpdate(row)">
+            编辑
+          </el-button>
+          <el-button size="mini" type="danger" @click="handleDel(row)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 分页-->
+    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
+    <NoticeAdd v-model="showNoticeAddCard"></NoticeAdd>
+
+  </div>
+</template>
+
+<script>
+
+import NoticeAdd from "./NoticeAdd.vue"
+import Pagination from '@/components/Pagination'
+
+export default {
+  name: 'NoticeList',
+  components: { Pagination, NoticeAdd},
+  data() {
+    return {
+      downloadLoading: false,
+      showSearch: false,
+      showNoticeAddCard: true,
+      total: 0,
+      listLoading: false,
+      datas: [
+        { id: 1, siteName: '恒大君庭', absorName: '采煤塌陷区治理（肿瘤医院）', tranType: 'external', runCarNum: '', cumulTran: '', tranStatus: 'wait', applyDate: '2021-01-25', approvalStatus: 'edit' },
+        { id: 2, siteName: '拓基鼎元世家', absorName: '', tranType: 'internal', runCarNum: '', cumulTran: '', tranStatus: 'wait', applyDate: '2021-01-05', approvalStatus: 'approving' },
+        { id: 3, siteName: '观湖名邸一期', absorName: '世行贷款采煤塌陷修复3-2工区', tranType: 'external', runCarNum: '5', cumulTran: '541', tranStatus: 'runing', applyDate: '2020-12-14', approvalStatus: 'agree' },
+        { id: 4, siteName: '舜耕华府三期', absorName: '档案馆回填', tranType: 'external', runCarNum: '18', cumulTran: '1259', tranStatus: 'runing', applyDate: '20210-12-08', approvalStatus: 'agree' },
+        { id: 5, siteName: '城市综合体', absorName: '中电科八号院灰塘', tranType: 'external', runCarNum: '', cumulTran: '', tranStatus: 'wait', applyDate: '2020-11-11', approvalStatus: 'rejected' },
+        { id: 6, siteName: '国烨新城', absorName: '', tranType: 'internal', runCarNum: '11', cumulTran: '', tranStatus: 'runing', applyDate: '2020-10-19', approvalStatus: 'agree' },
+        { id: 7, siteName: '经开区绿色制造产业园', absorName: '林王村2号炉灰塘', tranType: 'external', runCarNum: '20', cumulTran: '2560', tranStatus: 'over', applyDate: '2020-10-03', approvalStatus: 'agree' }
+      ],
+      searchData: {
+        siteName: '',
+        absorName: '',
+        tranType: '',
+        tranStatus: '',
+        approvalStatus: ''
+      },
+
+    }
+  },
+  created() { },
+  methods: {
+    handleSearch() {
+      console.log('搜索')
+      console.log(this.searchData)
+    },
+    handleDel(row) {
+
+    },
+    handleUpdate(row) {
+
+    },
+    handleRead(row) {
+
+    },
+
+
+  }
+
+}
+</script>

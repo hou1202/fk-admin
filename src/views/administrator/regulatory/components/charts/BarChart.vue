@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import * as echarts from 'echarts'
+import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
+
 
 const animationDuration = 6000
 
 export default {
-  mixins: [resize],
+
   props: {
     className: {
       type: String,
@@ -22,7 +22,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '200px'
     }
   },
   data() {

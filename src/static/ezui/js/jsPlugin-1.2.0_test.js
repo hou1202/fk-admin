@@ -1536,8 +1536,7 @@
                       n()
                     } else {
                       p[q] = 1
-                      var t = a.oTool.parseXmlFromStr(r.responseText)
-                      (0, h
+                      var t = a.oTool.parseXmlFromStr(r.responseText)(0, h
                         .default)(t).find('subStatusCode').text() === 'lowPrivilege' ? i(403) : i()
                     }
                   }
@@ -5937,9 +5936,9 @@
               for (o = 0; o < r; o++) {
                 if (this.m_aPoint[o][0] + e - this.m_iDriftStartX > i.m_iCanvasWidth || this.m_aPoint[o][1] + n - this.m_iDriftStartY > i.m_iCanvasHeight || this.m_aPoint[o][0] + e - this.m_iDriftStartX < 0 || this.m_aPoint[o][1] + n - this.m_iDriftStartY < 0) {
                   return this.m_iDriftStartX = e,
-                  void (this.m_iDriftStartY = n) 
-} 
-}
+                  void (this.m_iDriftStartY = n)
+                }
+              }
               for (o = 0; o < r; o++) {
                 this.m_aPoint[o][0] = this.m_aPoint[o][0] + e - this.m_iDriftStartX,
                 this.m_aPoint[o][1] = this.m_aPoint[o][1] + n - this.m_iDriftStartY
@@ -6143,9 +6142,9 @@
               for (o = 0; o < r; o++) {
                 if (this.m_aPoint[o][1] + n - this.m_iDriftStartY > i.m_iCanvasHeight || this.m_aPoint[o][0] + e - this.m_iDriftStartX < 0 || this.m_aPoint[o][1] + n - this.m_iDriftStartY < 0) {
                   return this.m_iDriftStartX = e,
-                  void (this.m_iDriftStartY = n) 
-} 
-}
+                  void (this.m_iDriftStartY = n)
+                }
+              }
               for (o = 0; o < r; o++) {
                 this.m_aPoint[o][0] = this.m_aPoint[o][0] + e - this.m_iDriftStartX,
                 this.m_aPoint[o][1] = this.m_aPoint[o][1] + n - this.m_iDriftStartY
@@ -6245,9 +6244,9 @@
                     i[f].fillStyle = this.m_szDrawColor,
                     i[f].arc(this.m_aPoint[n][0], this.m_aPoint[n][1], 3, 0, 2 * Math.PI, !0),
                     i[f].closePath(),
-                    i[f].fill() 
-} 
-}
+                    i[f].fill()
+                  }
+                }
                 this.m_szTips !== '' && (i[f].strokeStyle = this.m_szDrawColor, i[f].fillText(this.m_szTips, this.m_aPoint[0][0] + 10, this.m_aPoint[0][1] + 4))
               }
             }
@@ -6399,9 +6398,9 @@
                     i[f].arc(this.m_aPoint[t][0], this.m_aPoint[t][1], 3, 0, 360, !1),
                     i[f].fillStyle = this.m_szDrawColor,
                     i[f].closePath(),
-                    i[f].fill() 
-} 
-}
+                    i[f].fill()
+                  }
+                }
                 for (i[f].beginPath(), i[f].moveTo(this.m_aPoint[0][0], this.m_aPoint[0][1]), t = 0, e = this.m_aPoint.length; t < e; t++) t !== 0 && i[f].lineTo(this.m_aPoint[t][0], this.m_aPoint[t][1])
                 i[f].stroke(),
                 this.m_bClosed && (i[f].fillText(this.m_szTips, (this.m_oEdgePoints.left.x + this.m_oEdgePoints.right.x) / 2, (this.m_oEdgePoints.top.y + this.m_oEdgePoints.bottom.y) / 2), i[f].closePath(), i[f].stroke(), i[f].globalAlpha = this.m_iTranslucent, i[f].fill())
@@ -6568,29 +6567,29 @@
             key: 'getAllShapesInfo',
             value: function() {
               for (var t = [], e = 0, n = this[c].length; e < n; e++) {
- this[c][e].m_szType === 'Grid' ? t.push({
-                szType: this[c][e].m_szType,
-                szGridMap: this[c][e].m_szGridMap,
-                iGridColNum: this[c][e].m_iGridColNum,
-                iGridRowNum: this[c][e].m_iGridRowNum
-              }) : this[c][e].m_szType === 'RectOSD' ? t.push({
-                szType: this[c][e].m_szType,
-                szText: this[c][e].m_szText,
-                szEnabled: this[c][e].m_szEnabled,
-                szOSDType: this[c][e].m_szOSDType,
-                iPositionX: this[c][e].m_aPoint[0][0],
-                iPositionY: this[c][e].m_aPoint[0][1],
-                szDateStyle: this[c][e].m_szDateStyle,
-                szClockType: this[c][e].m_szClockType,
-                szDisplayWeek: this[c][e].m_szDisplayWeek,
-                szId: this[c][e].m_szId
-              }) : t.push({
-                szType: this[c][e].m_szType,
-                aPoint: this[c][e].m_aPoint,
-                szId: this[c][e].m_szId,
-                bChoosed: this[c][e].m_bChoosed
-              }) 
-}
+                this[c][e].m_szType === 'Grid' ? t.push({
+                  szType: this[c][e].m_szType,
+                  szGridMap: this[c][e].m_szGridMap,
+                  iGridColNum: this[c][e].m_iGridColNum,
+                  iGridRowNum: this[c][e].m_iGridRowNum
+                }) : this[c][e].m_szType === 'RectOSD' ? t.push({
+                  szType: this[c][e].m_szType,
+                  szText: this[c][e].m_szText,
+                  szEnabled: this[c][e].m_szEnabled,
+                  szOSDType: this[c][e].m_szOSDType,
+                  iPositionX: this[c][e].m_aPoint[0][0],
+                  iPositionY: this[c][e].m_aPoint[0][1],
+                  szDateStyle: this[c][e].m_szDateStyle,
+                  szClockType: this[c][e].m_szClockType,
+                  szDisplayWeek: this[c][e].m_szDisplayWeek,
+                  szId: this[c][e].m_szId
+                }) : t.push({
+                  szType: this[c][e].m_szType,
+                  aPoint: this[c][e].m_aPoint,
+                  szId: this[c][e].m_szId,
+                  bChoosed: this[c][e].m_bChoosed
+                })
+              }
               return t
             }
           },
@@ -6660,11 +6659,11 @@
               var r = null
               if (n === 'Rect' || n === 'Polygon' || n === 'Line' || n === 'Point') {
                 for (var o = 0, a = i.length; o < a; o++) {
- n === 'Rect' ? (r = new w(), r.m_iEditType = i[o].iEditType, r.m_szTips = i[o].szTips || '', r.m_szDrawColor = i[o].szDrawColor, r.m_szFillColor = i[o].szFillColor, r.m_iTranslucent = i[o].iTranslucent) : n === 'Polygon' ? (r = new x(), i[o].iPolygonType === 0 ? r.m_bClosed = !0 : r.m_bClosed = i[o].bClosed, r.m_szTips = i[o].szTips || '', r.m_szId = i[o].szId || '', r.m_iPolygonType = i[o].iPolygonType, r.m_iMinClosed = i[o].iMinClosed || 3, r.m_iMaxPointNum = i[o].iMaxPointNum || 11, r.m_iEditType = i[o].iEditType, r.m_szDrawColor = i[o].szDrawColor, r.m_szFillColor = i[o].szFillColor, r.m_iTranslucent = i[o].iTranslucent) : n === 'Line' ? (r = new C(), r.m_iLineType = i[o].iLineType, r.m_szTips = i[o].szTips || '', r.m_szId = i[o].szId, r.m_iDirection = i[o].iDirection, r.m_iArrowType = i[o].iArrowType, r.m_szDrawColor = i[o].szDrawColor, r.setPointInfo(i[o].aPoint)) : n === 'Point' && (r = new T(), r.m_szId = i[o].szId, r.m_szDrawColor = i[o].szDrawColor, r.setPointInfo(i[o].aPoint)),
-                r.setPointInfo(i[o].aPoint),
-                o === 0 && (r.m_bChoosed = !0),
-                e(r) 
-}
+                  n === 'Rect' ? (r = new w(), r.m_iEditType = i[o].iEditType, r.m_szTips = i[o].szTips || '', r.m_szDrawColor = i[o].szDrawColor, r.m_szFillColor = i[o].szFillColor, r.m_iTranslucent = i[o].iTranslucent) : n === 'Polygon' ? (r = new x(), i[o].iPolygonType === 0 ? r.m_bClosed = !0 : r.m_bClosed = i[o].bClosed, r.m_szTips = i[o].szTips || '', r.m_szId = i[o].szId || '', r.m_iPolygonType = i[o].iPolygonType, r.m_iMinClosed = i[o].iMinClosed || 3, r.m_iMaxPointNum = i[o].iMaxPointNum || 11, r.m_iEditType = i[o].iEditType, r.m_szDrawColor = i[o].szDrawColor, r.m_szFillColor = i[o].szFillColor, r.m_iTranslucent = i[o].iTranslucent) : n === 'Line' ? (r = new C(), r.m_iLineType = i[o].iLineType, r.m_szTips = i[o].szTips || '', r.m_szId = i[o].szId, r.m_iDirection = i[o].iDirection, r.m_iArrowType = i[o].iArrowType, r.m_szDrawColor = i[o].szDrawColor, r.setPointInfo(i[o].aPoint)) : n === 'Point' && (r = new T(), r.m_szId = i[o].szId, r.m_szDrawColor = i[o].szDrawColor, r.setPointInfo(i[o].aPoint)),
+                  r.setPointInfo(i[o].aPoint),
+                  o === 0 && (r.m_bChoosed = !0),
+                  e(r)
+                }
               } else n === 'Grid' && (r = new P(), r.m_szGridMap = i[0].szGridMap || '', r.m_iGridColNum = i[0].iGridColNum || 22, r.m_iGridRowNum = i[0].iGridRowNum || 18, e(r))
               t()
             }

@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="v-home">
 
     <div class="box-left">
@@ -9,7 +9,7 @@
           <dv-decoration-9 style="width:70px;height:70px;" :color="['rgba(64, 158, 255,0.5)','rgba(64, 158, 255,0.5)']" :dur="5">158</dv-decoration-9>
           <dv-decoration-9 style="width:70px;height:70px;" :color="['rgba(64, 158, 255,0.5)','rgba(64, 158, 255,0.5)']" :dur="5">77</dv-decoration-9>
           <div class="box-label box1-label">
-            <p>车辆总数</p>
+            <p>工地总数</p>
             <p>在运车辆</p>
             <p>异常车辆</p>
           </div>
@@ -18,16 +18,19 @@
 
       <dv-border-box-13 class="block-box">
         <div class="block-box-content  box-2">
-          <h3 class="block-box-title">今日出土量<dv-decoration-3 class="block-box-icon" /></h3>
+          <h3 class="block-box-title">工地数据<dv-decoration-3 class="block-box-icon" /></h3>
           <div class="box2-charts">
             <dv-water-level-pond :config="soilNum.soil" style="width:90px;height:90px" />
             <dv-water-level-pond :config="soilNum.tranks" style="width:90px;height:90px" />
           </div>
           <div class="box-label box2-label">
-            <p>今日出土量</p>
-            <p>运输趟次</p>
+            <p>工地总数</p>
+            <p>在运工地数</p>
           </div>
-          <dv-scroll-ranking-board :config="soilNum.ranking" :color="['#409eff','#409eff']" />
+          <h4>在运工地分布</h4>
+          <!-- <dv-scroll-ranking-board :config="soilNum.ranking" :color="['#409eff','#409eff']" /> -->
+          <!-- <div class="e-charts" style="width: 100%;height:200px;"></div> -->
+          <BarChart></BarChart>
         </div>
       </dv-border-box-13>
 
@@ -128,10 +131,13 @@
 </template>
 <script>
 import LivePlayer from '@liveqing/liveplayer'
+
+import BarChart from './charts/Bar3dChart.vue'
+
 export default {
   name: 'VHome',
   components: {
-    LivePlayer
+    LivePlayer, BarChart
   },
   data() {
     return {
@@ -206,9 +212,9 @@ export default {
           date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
-        }],
+        },
+      ],
       selectedSite: {},
-
     }
   },
   methods: {
@@ -234,7 +240,8 @@ export default {
     },
     closeVideo() {
       this.OpenVideoCard = false;
-    }
+    },
+
 
   }
 }

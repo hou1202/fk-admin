@@ -3651,29 +3651,29 @@
                 else if (u !== '*' && u !== o) {
                   if (((a = l[u + ' ' + o] || l['* ' + o]), !a)) {
                     for (r in l) {
- if (
-                      ((s = r.split(' ')),
-                      s[1] === o && (a = l[u + ' ' + s[0]] || l['* ' + s[0]]))
-                    ) {
-                      a === !0
-                        ? (a = l[r])
-                        : l[r] !== !0 && ((o = s[0]), f.unshift(s[1]))
-                      break
-                    } 
-}
+                      if (
+                        ((s = r.split(' ')),
+                        s[1] === o && (a = l[u + ' ' + s[0]] || l['* ' + s[0]]))
+                      ) {
+                        a === !0
+                          ? (a = l[r])
+                          : l[r] !== !0 && ((o = s[0]), f.unshift(s[1]))
+                        break
+                      }
+                    }
                   }
                   if (a !== !0) {
                     if (a && t.throws) e = a(e)
                     else {
- try {
-                      e = a(e)
-                    } catch (t) {
-                      return {
-                        state: 'parsererror',
-                        error: a ? t : 'No conversion from ' + u + ' to ' + o
+                      try {
+                        e = a(e)
+                      } catch (t) {
+                        return {
+                          state: 'parsererror',
+                          error: a ? t : 'No conversion from ' + u + ' to ' + o
+                        }
                       }
-                    } 
-}
+                    }
                   }
                 }
               }
@@ -4101,11 +4101,8 @@
                             ((c = e[q] || (e[q] = {})),
                             (f = c[e.uniqueID] || (c[e.uniqueID] = {})),
                             r && r === e.nodeName.toLowerCase())
-                          )
-                            {e = e[i] || e}
-                          else {
-                            if ((l = f[o]) && l[0] === j && l[1] === s)
-                              {return (h[2] = l[2])}
+                          ) { e = e[i] || e } else {
+                            if ((l = f[o]) && l[0] === j && l[1] === s) { return (h[2] = l[2]) }
                             if (((f[o] = h), (h[2] = t(e, n, u)))) return !0
                           }
                         }

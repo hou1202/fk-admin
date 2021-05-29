@@ -181,6 +181,26 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/index',
+    name: 'Office',
+    meta: {
+      title: '线上办公',
+      icon: 'lock'
+    },
+    children: [
+      {
+        path: 'noticeList',
+        component: () => import('@/views/administrator/notice/NoticeList'),
+        name: 'NoticeList',
+        meta: {
+          title: '公告'
+        }
+      }
+    ]
+  },
+  {
     path: '/enterprise',
     component: Layout,
     redirect: '/enterprise/index',

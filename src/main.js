@@ -23,6 +23,7 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+// 自定义模块组件
 import selfTable from '@/components/FkTable'
 import selfTr from '@/components/FkTr'
 import selfTd from '@/components/FkTd'

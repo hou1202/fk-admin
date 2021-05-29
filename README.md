@@ -91,6 +91,32 @@ html模板中引入依赖js
   import { borderBox1 } from '@jiaminghi/data-view'
 ```
 
+- **Echarts 安装echarts图表组件**
+```
+  在默认的vue-element-admin是已经安装了echarts,但版本为4.2版本，可以更新安装更新版本的echarts-5.1，以及可以安装echarts的GL版本
+```
+安装echarts：
+```
+  npm install echarts -S
+```
+安装echarts-gl：
+```
+  npm install echarts-gl -S
+```
+全局引入
+```
+  在main.js中进行全局引入
+  import echarts from ‘echarts’
+  import ‘echarts-gl’
+  Vue.prototype.$echarts = echarts
+```
+按需引入
+```
+  在需要的template中进行引入
+  import echarts from ‘echarts’
+  import ‘echarts-gl’
+```
+
 ## 前序准备
 
 你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 、[vue-cli](https://github.com/vuejs/vue-cli) 、[axios](https://github.com/axios/axios) 和 [element-ui](https://github.com/ElemeFE/element)，所有的请求数据都使用[Mock.js](https://github.com/nuysoft/Mock)进行模拟，提前了解和学习这些知识会对使用本项目有很大的帮助。

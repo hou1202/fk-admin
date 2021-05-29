@@ -3,12 +3,36 @@
 
     <dv-border-box-11 title="建设垃圾管理数据可视化平台" :title-width="450" class="body-box">
       <!-- 主页-->
-      <vHome />
+      <vHome v-if="activePage == 'home'"/>
+      <vSite v-if="activePage == 'site'"/>
       <div class="bottom-nav">
-        <dv-border-box-1 :width="50" :height="50"><p>首页</p></dv-border-box-1>
-        <dv-border-box-1><p>工地</p></dv-border-box-1>
-        <dv-border-box-1><p>企业</p></dv-border-box-1>
-        <dv-border-box-1><p>工作台</p></dv-border-box-1>
+        <div style="display:inline-block;">
+          <!-- <div class="nav-box">
+            <p><span /><span /></p>
+            <p>首页</p>
+            <p><span /><span /></p>
+          </div>
+          <div class="nav-box">
+            <p><span /><span /></p>
+            <p>工地</p>
+            <p><span /><span /></p>
+          </div>
+          <div class="nav-box">
+            <p><span /><span /></p>
+            <p>企业</p>
+            <p><span /><span /></p>
+          </div>
+          <div class="nav-box">
+            <p><span /><span /></p>
+            <p>工作台</p>
+            <p><span /><span /></p>
+          </div> -->
+          <dv-border-box-10 class="table-bottom"><p @click="changePage('home')">首页</p></dv-border-box-10>
+          <dv-border-box-10 class="table-bottom"><p @click="changePage('site')">工地</p></dv-border-box-10>
+          <dv-border-box-10 class="table-bottom"><p @click="changePage('site')">企业</p></dv-border-box-10>
+          <!-- <dv-border-box-10 class="table-bottom"><p><router-link to="/">工作台</router-link></p></dv-border-box-10> -->
+          <dv-border-box-10 class="table-bottom"><p @click="changePage('/')">工作台</p></dv-border-box-10>
+        </div>
       </div>
     </dv-border-box-11>
     <div id="container" />
@@ -18,14 +42,18 @@
 </template>
 <script>
 import vHome from './components/vHome.vue'
+import vSite from './components/vSite.vue'
+
 export default {
   name: 'Visualization',
   components: {
-    vHome
+    vHome, vSite
   },
   data() {
     return {
       map: null,
+      activePage: 'site',
+      fullscreen: false,
       path: [
         [
           { lat: 31.858419, long: 117.347845 },
@@ -77,7 +105,7 @@ export default {
 
   },
   created() {
-    this.openFullscreen()
+    this.isFullscreen()
     setTimeout(() => {
       // 延时执行初始化地图
       // this.initMap();
@@ -106,18 +134,34 @@ export default {
       })
     },
 
-    // 进入全屏
-    openFullscreen() {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen()
-      } else if (document.documentElement.webkitRequestFullScreen) {
-        document.documentElement.webkitRequestFullScreen()
-      } else if (document.documentElement.mozRequestFullScreen) {
-        document.documentElement.mozRequestFullScreen()
-      } else if (document.documentElement.msRequestFullscreen) {
-        // IE11
-        document.documentElement.msRequestFullscreen()
+    /* 全屏 */
+    isFullscreen() {
+      let element = document.documentElement;
+      if (this.fullscreen) {
+        // 退出全屏
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+      } else {
+        // 进入全屏
+        if (element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if (element.webkitRequestFullScreen) {
+          element.webkitRequestFullScreen();
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+          // IE11
+          element.msRequestFullscreen();
+        }
       }
+      this.fullscreen = !this.fullscreen;
     },
 
     initPolyon() {
@@ -152,6 +196,16 @@ export default {
         ]
       })
       // })
+    },
+
+    /* 切换页面*/
+    changePage(page) {
+      if(page == 'home' || page == 'site'){
+        this.activePage = page
+      }else{
+        this.isFullscreen()
+        this.$router.push("/");
+      }
     }
   }
 }
@@ -178,27 +232,97 @@ export default {
     bottom: 10px;
     width: 100%;
     height: 50px;
-    .dv-border-box-1 {
+    text-align: center;
+    .dv-border-box-10 {
+      width: 80px;
+      height: 45px;
+      float: left;
+      margin: 0 25px;
+      p {
+        margin: 0;
+        line-height: 45px;
+        color: rgba(64,158,255,0.6);
+        cursor:pointer
+      }
+    }
+
+    .nav-box {
       width: 50px;
-          height: 50px;
-          float: left;
-          margin-left: 50px;
+      height: 50px;
+      background-color: rgba(64,158,255,0.6);
+      float: left;
+      margin-right: 50px;
+      p{
+        margin: 0;
+        position: relative;
+        color: #fff;
+        span {
+          display: block;
+          width: 10px;
+          height: 10px;
+        }
+      }
+      p:nth-child(1){
+        height: 10px;
+        span:nth-child(1) {
+          border-top: 2px solid #409EFF;
+          border-left: 2px solid #409EFF;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        span:nth-child(2) {
+          border-top: 2px solid #409EFF;
+          border-right: 2px solid #409EFF;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      }
+      p:nth-child(2){
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 14px;
+      }
+      p:nth-child(3){
+        height: 10px;
+        span:nth-child(1) {
+          border-bottom: 2px solid #409EFF;
+          border-left: 2px solid #409EFF;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        span:nth-child(2) {
+          border-bottom: 2px solid #409EFF;
+          border-right: 2px solid #409EFF;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
+    .nav-box:last-child {
+      margin-right: 0;
     }
   }
 }
 .box-left {
   width: 390px;
-  height: 100%;
+  height: calc(100% - 60px);
   position: absolute;
   left: 10px;
   top: 40px;
+  overflow: hidden;
 }
 .box-right {
   width: 390px;
-  height: 100%;
+  height: calc(100% - 60px);
   position: absolute;
   right: 10px;
   top: 40px;
+  overflow: hidden;
 }
 
 .block-box {
@@ -223,6 +347,7 @@ export default {
       font-size: 18px;
       margin: 0 0 10px 0;
       display: flex;
+      position: relative;
       .block-box-icon {
         height: 20px;
         width: 100px;
@@ -230,7 +355,12 @@ export default {
 
       }
     }
+    h4 {
+      margin: 20px 0 10px 10px;
+      font-size: 14px;
+    }
     .box-label {
+      overflow: hidden;
       p {
         float: left;
         font-size: 12px;
