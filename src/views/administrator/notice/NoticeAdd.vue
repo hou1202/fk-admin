@@ -20,12 +20,20 @@
           <el-input v-model="formData.v_title" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="请输入公告摘要说明" />
         </el-form-item>
         <el-form-item label="内容">
-          <editor
+          <!-- <editor
             :api-key="tinyConfig.apiKey"
             :init="tinyConfig.editConfig"
             v-model="formData.content"
           >
-          </editor>
+          </editor> -->
+          <TinymceEditor
+            v-model="formData.content"
+            :disabled="disabled"
+            @onClick="clickEditor"
+            ref="editor"
+          >
+
+          </TinymceEditor>
         </el-form-item>
 
 
@@ -48,12 +56,15 @@
 
 // 引入image-conversion - 图片压缩
 import * as imageConversion from 'image-conversion'
-import tinymce from 'tinymce/tinymce'
-import Editor from '@tinymce/tinymce-vue'
+/* import tinymce from 'tinymce/tinymce'
+import Editor from '@tinymce/tinymce-vue' */
+import TinymceEditor from "/src/components/TinymceEditor"
+
+
 
 export default {
   name: 'NoticeAdd',
-  components: { imageConversion, editor: Editor},
+  components: { imageConversion, TinymceEditor},
   props: ['value'],
   data() {
     return {
@@ -70,17 +81,20 @@ export default {
         v_title: '',
         content: '',
       },
+      disabled: false,
       /* 副文本配置信息*/
       tinyConfig: {
         apiKey: '39c035b73b98af84fa9dcb8439bbe19ee95af523c33ada57adaf97ff0272709d',
         editConfig: {
           height: 500, //富文本高度
-          language_url: '/tinymce/zh_CN.js', //中文包
+          language_url: '/static/tinymce/zh_CN.js', //中文包
           language: 'zh_CN', //中文
+          skin_url: '/static/tinymce/skins/ui/oxide',//skin路径
+          content_css: '/static/tinymce/skins/content/default/content.css',//skin路径
           browser_spellcheck: true, // 拼写检查
           branding: false, // 去水印
           elementpath: true, //禁用编辑器底部的状态栏
-          statusbar: true, // 隐藏编辑器底部的状态栏
+          statusbar: false, // 隐藏编辑器底部的状态栏
           paste_data_images: true, // 是否允许粘贴图像
           menubar: true, // 隐藏最上方menu
           fontsize_formats: '14px 16px 18px 20px 24px 26px 28px 30px 32px 36px', //字体大小
@@ -94,7 +108,7 @@ export default {
           ],
           toolbar: 'fontselect fontsizeselect link lineheight forecolor backcolor bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | image quicklink h2 h3 blockquote table numlist bullist preview fullscreen',
           // 图片上传三个参数，图片数据，成功时的回调函数，失败时的回调函数
-          images_upload_handler: function(blobInfo, success, failure) {
+          /* images_upload_handler: function(blobInfo, success, failure) {
             let formdata = new FormData();
             formdata.append("file", blobInfo.blob());
             // 上传图片接口，跟后端同事协调上传图片
@@ -105,7 +119,7 @@ export default {
             }).catch(res => {
                failure("error");
              });
-          }
+          } */
         }
       }
     }
@@ -114,7 +128,9 @@ export default {
     close() {
       this.$emit('input', false)
     },
+    clickEditor() {
 
+    },
     // 提交数据
     submitApplyData() {
       console.log(this.applyData.items)
