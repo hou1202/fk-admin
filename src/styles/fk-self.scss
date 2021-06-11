@@ -187,6 +187,16 @@
     }
   }
 }
+.form-single-full {
+  .el-form-item {
+    /* display: flex; */
+    width: 100%;
+    .el-form-item__content {
+      /* width:calc(100% - 230px); */
+      width: 100%;
+    }
+  }
+}
 /* 操作功能区 */
 .self-func {
   /* border-bottom: 1px solid #d8dce5;
@@ -538,4 +548,37 @@
 
 
   }
+}
+
+/* tinymce部分样式重定义 */
+.tox .tox-tbtn {
+  width: 30px !important;
+  height: 30px !important;
+}
+.tox .tox-tbtn--select {
+  width: auto !important;
+}
+.tox .tox-toolbar,.tox .tox-toolbar__overflow,.tox .tox-toolbar__primary{
+  background:url("data:image/svg+xml;charset=utf8,%3Csvg height='35px' viewBox='0 0 40 35px' width='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='34px' width='100' height='1' fill='%23cccccc'/%3E%3C/svg%3E") left 0 top 0 #fff !important;
+}
+.tox .tox-split-button__chevron {
+  width:16px !important;
+}
+.tox .tox-tbtn--bespoke .tox-tbtn__select-label {
+  width: 4em !important;
+}
+.tox .tox-tbtn__icon-wrap svg {
+  width:20px;
+  height: 20px;
+  fill: #5b626b !important;
+}
+.tox-tinymce {
+  border: 1px solid #DCDFE6 !important;
+  border-radius: 5px !important;
+}
+.tox .tox-statusbar {
+  border-top: 1px solid #DCDFE6 !important;
+}
+.tox-sidebar-wrap p {
+  margin: 0 !important;
 }

@@ -360,7 +360,7 @@ export default {
       font-size: 14px;
     }
     .box-label {
-      overflow: hidden;
+      /* overflow: hidden; */
       p {
         float: left;
         font-size: 12px;

@@ -117,6 +117,60 @@ html模板中引入依赖js
   import ‘echarts-gl’
 ```
 
+- **Tinymce 副文本组件**
+```
+    Tinymce是一个副文本编辑器组件，其针对VUE提供了一个tinymce-vue的插件
+```
+安装：
+```
+  安装tinymce：
+    npm install tinymce -S
+    
+  安装tinymce-vue：
+  npm install @tinymce/tinymce-vue -S
+```
+版本问题：
+```
+  若当前vue使用的版本为2.X版本的，则在使用tinymce应使用固定版本
+  安装tinymce：
+    npm install tinymce@5.1.0 -S
+    
+  安装tinymce-vue：
+  npm install @tinymce/tinymce-vue@3.0.1 -S
+```
+新建tinymce目录
+```
+  在public/static下新建tinymce目录，将node_modules/tinymce下的skins目录，复制到public/static/tinymce目录下
+  方便后期使用时的引入
+```
+下载中文语言包
+```
+  语言包下载地址：https://www.tiny.cloud/get-tiny/language-packages/
+  将下载下来的语言包放入public/static/tinymce/langs下
+```
+引入
+```
+  import tinymce from 'tinymce'
+  
+  import Editor from '@tinymce/tinymce-vue'
+```
+插件引入
+```
+  插件都在tinymce的plugins下
+  
+  import 'tinymce/plugins/table'
+  
+  插件引入后，若要进行使用，需在tinymce的初始化中进行注册
+```
+文档
+```
+  tinymce官方网址：https://www.tiny.cloud/
+  
+  中文操作手册地址：http://tinymce.ax-z.cn/
+  
+  参考资料:https://blog.csdn.net/liub37/article/details/83310879
+```
+
 ## 前序准备
 
 你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 、[vue-cli](https://github.com/vuejs/vue-cli) 、[axios](https://github.com/axios/axios) 和 [element-ui](https://github.com/ElemeFE/element)，所有的请求数据都使用[Mock.js](https://github.com/nuysoft/Mock)进行模拟，提前了解和学习这些知识会对使用本项目有很大的帮助。

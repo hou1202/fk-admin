@@ -260,7 +260,7 @@ export default {
     .box-1 {
       .dv-decoration-9 {
         float: left;
-        margin: 0 13px;
+        margin: 0 20px;
         font-weight: bold;
       }
       .box1-label p{

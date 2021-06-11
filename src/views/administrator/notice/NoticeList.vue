@@ -29,7 +29,7 @@
       </div>
 
       <div class="self-func">
-        <el-button class="filter-item" size="small" type="primary" @click="showNoticeAddCard = true">
+        <el-button class="filter-item" size="small" type="primary" @click="handleCreate">
           新增公告
         </el-button>
       </div>
@@ -65,7 +65,8 @@
     </el-table>
     <!-- 分页-->
     <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
-    <NoticeAdd v-model="showNoticeAddCard"></NoticeAdd>
+    <NoticeAdd v-model="showNoticeAddCard" :noticeId="noticeId" :title="noticeTitle"></NoticeAdd>
+    <NoticeRead v-model="showNoticeReadCard" :noticeId="noticeId"></NoticeRead>
 
   </div>
 </template>
@@ -73,22 +74,24 @@
 <script>
 
 import NoticeAdd from "./NoticeAdd.vue"
+import NoticeRead from "./NoticeRead.vue"
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'NoticeList',
-  components: { Pagination, NoticeAdd},
+  components: { Pagination, NoticeAdd, NoticeRead},
   data() {
     return {
       downloadLoading: false,
       showSearch: false,
-      showNoticeAddCard: true,
+      showNoticeAddCard: false,
+      showNoticeReadCard: false,
       total: 0,
       listLoading: false,
       datas: [
         { id: 1, siteName: '恒大君庭', absorName: '采煤塌陷区治理（肿瘤医院）', tranType: 'external', runCarNum: '', cumulTran: '', tranStatus: 'wait', applyDate: '2021-01-25', approvalStatus: 'edit' },
         { id: 2, siteName: '拓基鼎元世家', absorName: '', tranType: 'internal', runCarNum: '', cumulTran: '', tranStatus: 'wait', applyDate: '2021-01-05', approvalStatus: 'approving' },
-        { id: 3, siteName: '观湖名邸一期', absorName: '世行贷款采煤塌陷修复3-2工区', tranType: 'external', runCarNum: '5', cumulTran: '541', tranStatus: 'runing', applyDate: '2020-12-14', approvalStatus: 'agree' },
+        { id: 0, siteName: '观湖名邸一期', absorName: '世行贷款采煤塌陷修复3-2工区', tranType: 'external', runCarNum: '5', cumulTran: '541', tranStatus: 'runing', applyDate: '2020-12-14', approvalStatus: 'agree' },
         { id: 4, siteName: '舜耕华府三期', absorName: '档案馆回填', tranType: 'external', runCarNum: '18', cumulTran: '1259', tranStatus: 'runing', applyDate: '20210-12-08', approvalStatus: 'agree' },
         { id: 5, siteName: '城市综合体', absorName: '中电科八号院灰塘', tranType: 'external', runCarNum: '', cumulTran: '', tranStatus: 'wait', applyDate: '2020-11-11', approvalStatus: 'rejected' },
         { id: 6, siteName: '国烨新城', absorName: '', tranType: 'internal', runCarNum: '11', cumulTran: '', tranStatus: 'runing', applyDate: '2020-10-19', approvalStatus: 'agree' },
@@ -96,28 +99,37 @@ export default {
       ],
       searchData: {
         siteName: '',
-        absorName: '',
-        tranType: '',
-        tranStatus: '',
-        approvalStatus: ''
       },
+      noticeId: null,
+      noticeTitle: '',
 
     }
   },
   created() { },
   methods: {
+    handleCreate () {
+      this.noticeId = null;
+      this.noticeTitle = '新增公告'
+      this.showNoticeAddCard = true;
+    },
+
     handleSearch() {
       console.log('搜索')
       console.log(this.searchData)
     },
+
     handleDel(row) {
 
     },
     handleUpdate(row) {
-
+      console.log(row)
+      this.noticeId = row.id
+      this.noticeTitle = '编辑公告'
+      this.showNoticeAddCard = true;
     },
     handleRead(row) {
-
+      this.noticeId = row.id
+      this.showNoticeReadCard = true;
     },
 
 
