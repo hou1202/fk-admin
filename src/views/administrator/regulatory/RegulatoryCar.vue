@@ -1294,8 +1294,8 @@ export default {
 
     /* 初始化地图*/
     initMap() {
-      this.map = new BMap.Map('allmap')
-      var point = new BMap.Point(117.028161, 32.635982)
+      this.map = new BMapGL.Map('allmap')
+      var point = new BMapGL.Point(117.028161, 32.635982)
       this.map.centerAndZoom(point, 12) // 创建中心点坐标及地图层级
       this.map.enableScrollWheelZoom(true)
       this.map.setMapStyleV2({
@@ -1310,14 +1310,14 @@ export default {
       // 清除地图覆盖物
       this.map.clearOverlays()
       // 重新初始化中心及层级
-      var point = new BMap.Point(117.028161, 32.635982)
+      var point = new BMapGL.Point(117.028161, 32.635982)
       this.map.centerAndZoom(point, 12)
       // 循环数据，创建标注
       this.carData.forEach((item, index) => {
         item.carList.forEach((itemC, indexC) => {
           // 创建Marker自定义标注图标
-          var myIcon = new BMap.Icon(this.carImg[itemC.gpsStatus], new BMap.Size(35, 31))
-          var marker = new BMap.Marker(new BMap.Point(itemC.lng, itemC.lat), { icon: myIcon })
+          var myIcon = new BMapGL.Icon(this.carImg[itemC.gpsStatus], new BMapGL.Size(35, 31))
+          var marker = new BMapGL.Marker(new BMapGL.Point(itemC.lng, itemC.lat), { icon: myIcon })
           this.map.addOverlay(marker)
         })
       })
@@ -1329,24 +1329,24 @@ export default {
       this.map.clearOverlays()
 
       // 重新初始化中心及层级
-      var point = new BMap.Point(this.trajectory[0].lng, this.trajectory[0].lat)
+      var point = new BMapGL.Point(this.trajectory[0].lng, this.trajectory[0].lat)
       this.map.centerAndZoom(point, 13)
 
       // 创建起终点标注
-      var startIcon = new BMap.Icon(this.startImg, new BMap.Size(30, 36))
-      var startMarker = new BMap.Marker(new BMap.Point(this.trajectory[0].lng, this.trajectory[0].lat), { icon: startIcon })
-      var endIcon = new BMap.Icon(this.endImg, new BMap.Size(30, 36))
-      var endMarker = new BMap.Marker(new BMap.Point(this.trajectory[this.trajectory.length - 1].lng, this.trajectory[this.trajectory.length - 1].lat), { icon: endIcon })
+      var startIcon = new BMapGL.Icon(this.startImg, new BMapGL.Size(30, 36))
+      var startMarker = new BMapGL.Marker(new BMapGL.Point(this.trajectory[0].lng, this.trajectory[0].lat), { icon: startIcon })
+      var endIcon = new BMapGL.Icon(this.endImg, new BMapGL.Size(30, 36))
+      var endMarker = new BMapGL.Marker(new BMapGL.Point(this.trajectory[this.trajectory.length - 1].lng, this.trajectory[this.trajectory.length - 1].lat), { icon: endIcon })
       this.map.addOverlay(startMarker)
       this.map.addOverlay(endMarker)
 
       // 创建线路
       var lineArr = []
       this.trajectory.forEach((item, index) => {
-        lineArr.push(new BMap.Point(item.lng, item.lat))
+        lineArr.push(new BMapGL.Point(item.lng, item.lat))
       })
-      var polylineBg = new BMap.Polyline(lineArr, { strokeColor: '#fff', strokeWeight: 8, strokeOpacity: 0.8 })
-      var polyline = new BMap.Polyline(lineArr, { strokeColor: '#67C23A', strokeWeight: 4, strokeOpacity: 0.8 })
+      var polylineBg = new BMapGL.Polyline(lineArr, { strokeColor: '#fff', strokeWeight: 8, strokeOpacity: 0.8 })
+      var polyline = new BMapGL.Polyline(lineArr, { strokeColor: '#67C23A', strokeWeight: 4, strokeOpacity: 0.8 })
       this.map.addOverlay(polylineBg)
       this.map.addOverlay(polyline)
     },

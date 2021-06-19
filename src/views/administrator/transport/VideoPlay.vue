@@ -82,7 +82,7 @@ export default {
   },
   created() {},
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(() => {
       // this.initPlay();
       // this.initPlay2();
       this.initPlay3()
@@ -97,7 +97,7 @@ export default {
       this.videlObj.stop()
       this.videoUrl = this.inputUrl
       console.log(this.videoUrl)
-      this.$nextTick(function() {
+      this.$nextTick(() => {
         this.videlObj = new EZUIKit.EZUIPlayer('myPlayer')
         console.log(this.videlObj)
         this.videlObj.play()

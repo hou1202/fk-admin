@@ -5,17 +5,16 @@
 
       <div class="self-search">
         <div v-if="showSearch">
-          <el-input v-model="searchData.siteName" placeholder="搜索工地名称" class="filter-item" @keyup.enter.native="handleSearch" />
-          <el-input v-model="searchData.absorName" placeholder="搜索消纳场名称" class="filter-item" @keyup.enter.native="handleSearch" />
-          <el-select v-model="searchData.tranType" placeholder="选择任务运输类型" clearable class="filter-item">
-            <el-option v-for="item in Object.entries(this.$selfJs.tranType)" :label="item[1]" :value="item[0]" />
-          </el-select>
-          <el-select v-model="searchData.tranStatus" placeholder="选择任务状态" clearable class="filter-item">
-            <el-option v-for="item in Object.entries(this.$selfJs.tranStatus)" :label="item[1]" :value="item[0]" />
-          </el-select>
-          <el-select v-model="searchData.approvalStatus" placeholder="选择任务审批状态" class="filter-item">
-            <el-option v-for="item in Object.entries(this.$selfJs.approvalStatus)" :label="item[1]" :value="item[0]" />
-          </el-select>
+          <el-input v-model="searchData.title" placeholder="搜索公告标题" class="filter-item" @keyup.enter.native="handleSearch" />
+          <el-date-picker
+            v-model="searchData.create_time"
+            type="daterange"
+            class="filter-item"
+            range-separator="至"
+            start-placeholder="发布开始日期"
+            end-placeholder="发布结束日期">
+          </el-date-picker>
+
           <el-button type="primary" size="mini" icon="el-icon-search" @click="handleSearch">
             搜索
           </el-button>
@@ -66,6 +65,7 @@
     <!-- 分页-->
     <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
     <NoticeAdd v-model="showNoticeAddCard" :noticeId="noticeId" :title="noticeTitle"></NoticeAdd>
+    <!-- 查看公告-->
     <NoticeRead v-model="showNoticeReadCard" :noticeId="noticeId"></NoticeRead>
 
   </div>
@@ -98,7 +98,8 @@ export default {
         { id: 7, siteName: '经开区绿色制造产业园', absorName: '林王村2号炉灰塘', tranType: 'external', runCarNum: '20', cumulTran: '2560', tranStatus: 'over', applyDate: '2020-10-03', approvalStatus: 'agree' }
       ],
       searchData: {
-        siteName: '',
+        title: '',
+        create_time: ''
       },
       noticeId: null,
       noticeTitle: '',
@@ -114,19 +115,26 @@ export default {
     },
 
     handleSearch() {
-      console.log('搜索')
       console.log(this.searchData)
     },
 
     handleDel(row) {
-
+      this.$confirm('确认删除公告：[ ' + row.siteName + ' ] ？', '删除警示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message.success('删除成功!')
+      }).catch(() => {})
     },
+
     handleUpdate(row) {
       console.log(row)
       this.noticeId = row.id
       this.noticeTitle = '编辑公告'
       this.showNoticeAddCard = true;
     },
+
     handleRead(row) {
       this.noticeId = row.id
       this.showNoticeReadCard = true;

@@ -38,6 +38,8 @@ Vue.component('showImg', showImg)
 
 import selfJs from './common/public.js' // 自定义公众JS文件
 Vue.use(selfJs)
+import bdMap from './common/bdMap.js'   // 百度地图自定义JS文件
+Vue.use(bdMap)
 
 /* import Video from 'video.js'
 import 'video.js/dist/video-js.css'

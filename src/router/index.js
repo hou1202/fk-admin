@@ -183,7 +183,6 @@ export const asyncRoutes = [
   {
     path: '/notice',
     component: Layout,
-    redirect: '/notice/index',
     name: 'Office',
     meta: {
       title: '线上办公',
@@ -196,6 +195,14 @@ export const asyncRoutes = [
         name: 'NoticeList',
         meta: {
           title: '公告'
+        }
+      },
+      {
+        path: 'roadDesign',
+        component: () => import('@/views/administrator/road-design/RoadList'),
+        name: 'RoadDesign',
+        meta: {
+          title: '线路规划'
         }
       }
     ]

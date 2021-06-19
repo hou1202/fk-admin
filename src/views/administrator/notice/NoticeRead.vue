@@ -9,7 +9,7 @@
       :close-on-click-modal="false"
       :visible.sync="winCard"
     >
-    <div class="notice">
+    <div class="notice" v-if="noticeId">
       <div class="notice-title">
         <h2>{{noticeData.title}}</h2>
         <p>发布日期：{{noticeData.time}}</p>
@@ -27,6 +27,9 @@
         <p style="margin: 0px; padding: 0px; max-width: 100%; line-height: 24px;"><span class="bjh-p" style="max-width: 100%;">不过，乐施会表示，全球约有40亿人需要通过COVAX获得疫苗，迄今，COVAX只分发了8100万剂，世界上的几个地区，尤其是非洲，都缺乏供应。世卫组织官员表示，非洲大部分地区的疫苗接种率仅在1-2%之间。&ldquo;G7所说的10亿剂捐赠目标绝对称得上是一个最低限度，而且我们需要加快速度。&rdquo;世界反贫困组织ONE负责人华莱士说，&ldquo;我们正在与病毒进行竞争，它领先的时间越长，全球受到新的、更危险的变异病毒的破坏就越大。&rdquo;路透社称，还有慈善团体认为，让低收入国家独自应对新冠疫情可能会使他们逃避疫苗接种，并导致病毒进一步变异，此外，在管理大量新冠疫苗方面，低收入国家也需要后勤支持。</span></p>
         </div>
       </div>
+    </div>
+    <div class="notice-null" v-else>
+      ~ 未获取到公告内容,请刷新或重新打开 ~
     </div>
     </el-dialog>
   </div>
@@ -70,25 +73,20 @@ export default {
     close() {
       this.$emit('input', false)
     },
+    getNoticeInfo() {
+      this.formData = {
+        title: 'G7将向全球捐10亿剂新冠疫苗？慈善组织批：杯水车薪',
+        v_title: '【环球时报-环球网报道 记者 张继丹】七国集团（G7）峰会11日在英国康沃尔郡举行。据路透社报道，东道主英国首相约翰逊10日宣布，G7领导人将向全球提供超过10亿剂新冠疫苗，协助全球80%成年人接种，以期在2022年底前结束疫情',
+        content: '在峰会前夕，美英两国分别宣布将捐赠5亿剂和1亿剂新冠疫苗。其中，英国将在未来数周提供500万剂，并于明年达到共捐赠1亿剂的目标，其中80%将通过新冠肺炎疫苗实施计划（COVAX）捐赠。美国总统拜登10日也宣布将购买5亿剂辉瑞疫苗，捐赠给92个低收入国家，并扬言美国将成为全球对抗新型肺炎的疫苗库。不过，乐施会表示，全球约有40亿人需要通过COVAX获得疫苗，迄今，COVAX只分发了8100万剂，世界上的几个地区，尤其是非洲，都缺乏供应。世卫组织官员表示，非洲大部分地区的疫苗接种率仅在1-2%之间。',
+      }
+    }
   },
   mounted() {
-    if(!this.noticeId) {
-      this.$message.warning('未获取到公告信息！')
-      this.$emit('input', false)
-    }
+
   },
   watch: {
     noticeId(newValue) {
-      console.log(newValue)
-      if(newValue) {
-        this.formData = {
-          title: 'G7将向全球捐10亿剂新冠疫苗？慈善组织批：杯水车薪',
-          v_title: '【环球时报-环球网报道 记者 张继丹】七国集团（G7）峰会11日在英国康沃尔郡举行。据路透社报道，东道主英国首相约翰逊10日宣布，G7领导人将向全球提供超过10亿剂新冠疫苗，协助全球80%成年人接种，以期在2022年底前结束疫情',
-          content: '在峰会前夕，美英两国分别宣布将捐赠5亿剂和1亿剂新冠疫苗。其中，英国将在未来数周提供500万剂，并于明年达到共捐赠1亿剂的目标，其中80%将通过新冠肺炎疫苗实施计划（COVAX）捐赠。美国总统拜登10日也宣布将购买5亿剂辉瑞疫苗，捐赠给92个低收入国家，并扬言美国将成为全球对抗新型肺炎的疫苗库。不过，乐施会表示，全球约有40亿人需要通过COVAX获得疫苗，迄今，COVAX只分发了8100万剂，世界上的几个地区，尤其是非洲，都缺乏供应。世卫组织官员表示，非洲大部分地区的疫苗接种率仅在1-2%之间。',
-        }
-      }else{
-
-      }
+      this.getNoticeInfo();
     }
   },
 
@@ -113,11 +111,20 @@ export default {
         border:1px solid #F2F6FC;
         border-radius: 5px;
         margin: 0;
+        line-height: 20px;
       }
     }
     .notice-content {
       margin: 20px 0;
     }
+  }
+  .notice-null {
+    width: 100%;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    color: #909399;
+    font-size: 14px;
   }
 
 

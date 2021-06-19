@@ -40,6 +40,8 @@ const getTableText = (row, column, cellValue, index, customCol = null) => {
   // let _this = eval(column.property);
   return _this[cellValue]
 }
+
+
 /** 通过列名为键，查找对应值并返回
  * @param {string}  column      数据对象名称
  * @param {string}  cellValue   字段名
