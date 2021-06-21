@@ -2,8 +2,62 @@ import Vue from 'vue'
 /* 百度地图公共JS文件 */
 
 /* 定义通过键值对对象 */
+const defaultPoints = {
+  lat: 32.637563,
+  lng: 117.026724,
+  icon: require('/src/assets/point-default.png'),
+  width: 30,
+  height: 36,
+  enClear: true,
+}
 
+/** 在百度地图上添加标注物
+ * @param {object}          map         百度地图的实例化对象
+ * @param {Object}          Options     参数对象
+ *   opt:lat                标注点坐标经度
+ *   opt:lng                标注点坐标纬度
+ *   opt:widht              标注点图标宽度
+ *   opt:height             标注点图标高度
+ *   opt:icon               标注点图标地址
+ *   opt:enClear            标注点图标是否在调用map.clearOverlays清除此覆盖物
+ * @return {object}         返回标注点的overlay对象
+ **/
+const markerPoint = (map, Options) => {
+  /* 初始化参数*/
+  let o = Options;
+  let Option = defaultPoints;
 
+  // 标注物坐标经纬度
+  if(o.lat && o.lng) {
+    Option.lat = o.lat
+    Option.lng = o.lng
+  }
+  // 标注物宽高
+  if(o.width && o.height) {
+    Option.widht = o.width
+    Option.height = o.height
+  }
+  // 标注物图标
+  if(o.icon) {
+    Option.icon = o.icon
+  }
+  // 是否在调用map.clearOverlays清除此覆盖物
+  if(typeof(o.enClear) !== 'undefined' && o.enClear == false) {
+    Option.enClear = false
+  }else{
+    Option.enClear = true
+  }
+
+  /* 进行地图标注*/
+  var pointIcon = new BMapGL.Icon(Option.icon, new BMapGL.Size(Option.width, Option.height))
+  var markers = new BMapGL.Marker(new BMapGL.Point(Option.lng, Option.lat), {
+    icon: pointIcon,
+    enableMassClear: Option.enClear,
+  })
+  map.addOverlay(markers)
+
+  return markers
+}
 
 
 /** 在百度地图上绘制多边形
@@ -14,7 +68,7 @@ import Vue from 'vue'
  * 当边线颜色传参有误时，返回错误提示
  * @return {object}   返回多边形overlay对象
  **/
-const drawPolygon = (map, points, typeColor = 1, enClear = false) => {
+const markerPolygon = (map, points, typeColor = 1, enClear = false) => {
   let objArr = [];
   points.forEach((item, index) => {
     objArr.push(new BMapGL.Point(item.lng, item.lat))
@@ -50,7 +104,7 @@ const drawPolygon = (map, points, typeColor = 1, enClear = false) => {
  * @param {string}     beColor     线条前景颜色代码
  * @return {array}     返回线形overlay对象数组
  **/
-const drawPolyline = (map, points, bgColor = '#fff', beColor = '#67C23A') => {
+const markerPolyline = (map, points, bgColor = '#fff', beColor = '#67C23A') => {
   var objArr = []
   points.forEach((item, index) => {
     objArr.push(new BMapGL.Point(item.lng, item.lat))
@@ -69,7 +123,8 @@ const drawPolyline = (map, points, bgColor = '#fff', beColor = '#67C23A') => {
 export default function(Vue) {
   // 添加全局API
   Vue.prototype.$bdMap = {
-    drawPolygon,
-    drawPolyline,
+    markerPoint,
+    markerPolygon,
+    markerPolyline,
   }
 }

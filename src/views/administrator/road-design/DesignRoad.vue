@@ -93,8 +93,6 @@ export default {
       },
       map: null,
       mapStyle: require('@/assets/map-json/base_map_config.json'),
-      siteImg: require('@/assets/gong.png'),
-      absorImg: require('@/assets/xiao.png'),
       formData: {
         id: this.siteId,
         points: []
@@ -126,42 +124,34 @@ export default {
     createMarker() {
 
       // 创建工地标注图标
-      var siteIcon = new BMapGL.Icon(this.siteImg, new BMapGL.Size(25, 36))
-      var siteMarker = new BMapGL.Marker(new BMapGL.Point(this.transData.siteLng, this.transData.siteLat), {
-        icon: siteIcon,
-        enableMassClear: false,
+      this.$bdMap.markerPoint(this.map,{
+        lat:this.transData.siteLat,
+        lng:this.transData.siteLng,
+        icon:require('/src/assets/point-site.png'),
+        enClear: false
       })
-      this.map.addOverlay(siteMarker)
       // 创建工地多边形
       if(this.transData.siteFence && this.transData.siteFence.length > 0) {
-        this.$bdMap.drawPolygon(this.map, this.transData.siteFence)
+        this.$bdMap.markerPolygon(this.map, this.transData.siteFence)
       }
 
       // 创建消纳场标注图标
-      var absorIcon = new BMapGL.Icon(this.absorImg, new BMapGL.Size(25, 36))
-      var absorMarker = new BMapGL.Marker(new BMapGL.Point(this.transData.absorLng, this.transData.absorLat), {
-        icon: absorIcon,
-        enableMassClear: false
+      this.$bdMap.markerPoint(this.map,{
+        lat:this.transData.absorLat,
+        lng:this.transData.absorLng,
+        icon:require('@/assets/point-absor.png'),
+        enClear: false,
       })
-      this.map.addOverlay(absorMarker)
+
       // 创建消纳场多边形
       if(this.transData.absorFence && this.transData.absorFence.length > 0) {
-        this.$bdMap.drawPolygon(this.map, this.transData.absorFence, 2)
+        this.$bdMap.markerPolygon(this.map, this.transData.absorFence, 2)
       }
 
       // 创建线路
       if(this.transData.transLine && this.transData.transLine.length > 0) {
-        this.$bdMap.drawPolyline(this.map, this.transData.transLine)
+        this.$bdMap.markerPolyline(this.map, this.transData.transLine)
       }
-    },
-
-    /* 方法：返回百度地图数组坐标点*/
-    returnMapArr(arr) {
-      let reArr = [];
-      arr.forEach((item, index) => {
-        reArr.push(new BMapGL.Point(item.lng, item.lat))
-      })
-      return reArr
     },
 
     handleSave() {
@@ -173,7 +163,7 @@ export default {
       if(res.length > 0){   // 有点位返回数据时执行，即有新绘制的线路
         this.formData.points = res
         this.map.clearOverlays()
-        this.$bdMap.drawPolyline(this.map, this.formData.points)
+        this.$bdMap.markerPolyline(this.map, this.formData.points)
       }
     },
   },

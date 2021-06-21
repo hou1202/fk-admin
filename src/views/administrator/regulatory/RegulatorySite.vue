@@ -218,8 +218,8 @@ export default {
       searchText: '', // 检索内容
       isAppointArea: true, // 是否查看指定辖区
       mapStyle: require('@/assets/map-json/base_map_config.json'),
-      siteImg: require('@/assets/gong.png'),
-      absorbImg: require('@/assets/xiao.png'),
+      siteImg: require('@/assets/point-site.png'),
+      absorbImg: require('@/assets/point-absor.png'),
       carImg: {
         normal: require('@/assets/car-normal-small.png'),
         park: require('@/assets/car-park-small.png'),
@@ -1284,41 +1284,41 @@ export default {
       // 工地消纳场规划线路
       designRoute: [
         {
-          longitude: 117.000205,
-          latitude: 32.573741
+          lng: 117.000205,
+          lat: 32.573741
         }, {
-          longitude: 116.999675,
-          latitude: 32.573649
+          lng: 116.999675,
+          lat: 32.573649
         }, {
-          longitude: 116.999675,
-          latitude: 32.57562
+          lng: 116.999675,
+          lat: 32.57562
         }, {
-          longitude: 117.017165,
-          latitude: 32.575696
+          lng: 117.017165,
+          lat: 32.575696
         }, {
-          longitude: 117.017201,
-          latitude: 32.581826
+          lng: 117.017201,
+          lat: 32.581826
         }, {
-          longitude: 117.021566,
-          latitude: 32.581781
+          lng: 117.021566,
+          lat: 32.581781
         }, {
-          longitude: 117.021656,
-          latitude: 32.57565
+          lng: 117.021656,
+          lat: 32.57565
         }, {
-          longitude: 117.032238,
-          latitude: 32.575635
+          lng: 117.032238,
+          lat: 32.575635
         }, {
-          longitude: 117.032238,
-          latitude: 32.581644
+          lng: 117.032238,
+          lat: 32.581644
         }, {
-          longitude: 117.028914,
-          latitude: 32.581644
+          lng: 117.028914,
+          lat: 32.581644
         }, {
-          longitude: 117.02829,
-          latitude: 32.582834
+          lng: 117.02829,
+          lat: 32.582834
         }, {
-          longitude: 117.028416,
-          latitude: 32.58288
+          lng: 117.028416,
+          lat: 32.58288
         }
       ]
 
@@ -1351,7 +1351,6 @@ export default {
 
     /* 左侧树结构，车辆检索方法*/
     searchCar() {
-      console.log(this.searchText.trim().length)
       if (this.searchText.trim().length > 7) {
         return this.$message.warning('您输入的车牌号码有误，请重新输入！')
       }
@@ -1412,9 +1411,11 @@ export default {
 
       /* 工地信息*/
       // 创建工地标注
-      var siteIcon = new BMapGL.Icon(this.siteImg, new BMapGL.Size(25, 36))
-      var siteMarker = new BMapGL.Marker(point, { icon: siteIcon })
-      this.map.addOverlay(siteMarker)
+      var siteMarker = this.$bdMap.markerPoint(this.map,{
+        lat:this.siteDetail.projectAddressLatitude,
+        lng:this.siteDetail.projectAddressLongitude,
+        icon:require('@/assets/point-site.png'),
+      })
       // 创建工地信息窗体
       var sContent = `<p><label>地址：</label>` + this.siteDetail.projectAddress + `</p>
                         <p><label>承运单位：</label>` + this.siteDetail.enterpriseName + `</p>`
@@ -1427,7 +1428,7 @@ export default {
       // 创建消纳场标注
       if (this.siteDetail.wSTransportType == 'external') {
         var absorbPoint = new BMapGL.Point(this.absorbDetail.longitude, this.absorbDetail.latitude)
-        var absorbIcon = new BMapGL.Icon(this.absorbImg, new BMapGL.Size(25, 36))
+        var absorbIcon = new BMapGL.Icon(this.absorbImg, new BMapGL.Size(30, 36))
         var absorbMarker = new BMapGL.Marker(absorbPoint, { icon: absorbIcon })
         this.map.addOverlay(absorbMarker)
         // 创建消纳场信息窗体
@@ -1440,20 +1441,17 @@ export default {
       }
 
       /* 规划线路信息*/
-      var routeArr = []
-      this.designRoute.forEach((item, index) => {
-        routeArr.push(new BMapGL.Point(item.longitude, item.latitude))
-      })
-      var designLineBg = new BMapGL.Polyline(routeArr, { strokeColor: '#fff', strokeWeight: 8, strokeOpacity: 0.8 })
-      var designLine = new BMapGL.Polyline(routeArr, { strokeColor: '#67C23A', strokeWeight: 4, strokeOpacity: 0.8 })
-      this.map.addOverlay(designLineBg)
-      this.map.addOverlay(designLine)
+      this.$bdMap.markerPolyline(this.map, this.designRoute)
 
       /* 创建工地在运车辆标注 */
       this.siteDetail.carList.forEach((item, index) => {
-        var myIcon = new BMapGL.Icon(this.carImg[item.gpsStatus], new BMapGL.Size(35, 31))
-        var marker = new BMapGL.Marker(new BMapGL.Point(item.lng, item.lat), { icon: myIcon })
-        this.map.addOverlay(marker)
+        this.$bdMap.markerPoint(this.map,{
+          width: 35,
+          height: 31,
+          lat:item.lat,
+          lng:item.lng,
+          icon:this.carImg[item.gpsStatus],
+        })
       })
     },
 
@@ -1480,9 +1478,12 @@ export default {
       this.treeData.forEach((item, index) => {
         item.transWorkTasks.forEach((itemS, indexS) => {
           // 创建Marker自定义标注图标
-          var myIcon = new BMapGL.Icon(this.siteImg, new BMapGL.Size(25, 36))
-          var marker = new BMapGL.Marker(new BMapGL.Point(itemS.longitude, itemS.latitude), { icon: myIcon })
-          this.map.addOverlay(marker)
+          this.$bdMap.markerPoint(this.map,{
+            lat:itemS.latitude,
+            lng:itemS.longitude,
+            icon:require('@/assets/point-site.png'),
+          })
+
         })
       })
     }

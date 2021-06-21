@@ -57,7 +57,7 @@ export default {
     return {
       mapSelectPonitCard: true,
       searchData: '',
-      pointImg: require('@/assets/point.png'),
+      pointImg: require('@/assets/point-default.png'),
       returnData: {
         lng: null,
         lat: null,
@@ -88,8 +88,8 @@ export default {
             this.returnData.lat = e.point.lat
 
             // 创建Marker自定义标注图标
-            var myIcon = new BMap.Icon(this.pointImg, new BMap.Size(33, 40))
-            var marker = new BMap.Marker(new BMap.Point(e.point), { icon: myIcon })
+            var myIcon = new BMap.Icon(this.pointImg, new BMap.Size(30, 36))
+            var marker = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat), { icon: myIcon })
             this.map.addOverlay(marker)
 
             // 地址逆解析

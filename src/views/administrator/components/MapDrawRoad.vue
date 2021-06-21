@@ -55,8 +55,8 @@ export default {
       enButton: false,
       map: null,
       mapStyle: require('@/assets/map-json/base_map_config.json'),
-      siteImg: require('@/assets/gong.png'),
-      absorImg: require('@/assets/xiao.png'),
+      siteImg: require('@/assets/point-site.png'),
+      absorImg: require('@/assets/point-absor.png'),
       returnData: [],       // 绘制线路坐标点,需返回给父组件数据
       drawLine: null,     // 鼠标绘制管理类实例化对象
       overlays: null,     // 新绘制线路对象
@@ -118,33 +118,28 @@ export default {
       });
 
       // 创建工地标注图标
-      var siteIcon = new BMapGL.Icon(this.siteImg, new BMapGL.Size(25, 36))
-      var siteMarker = new BMapGL.Marker(new BMapGL.Point(this.transInfo.siteLng, this.transInfo.siteLat), { icon: siteIcon })
-      this.map.addOverlay(siteMarker)
+      this.$bdMap.markerPoint(this.map,{
+        lat:this.transInfo.siteLat,
+        lng:this.transInfo.siteLng,
+        icon:require('/src/assets/point-site.png'),
+      })
       // 创建工地多边形，如果存在工地多边形数据
       if(this.transInfo.siteFence && this.transInfo.siteFence.length > 0)
-        this.$bdMap.drawPolygon(this.map, this.transInfo.siteFence)
+        this.$bdMap.markerPolygon(this.map, this.transInfo.siteFence)
 
       // 创建消纳场标注图标
-      var absorIcon = new BMapGL.Icon(this.absorImg, new BMapGL.Size(25, 36))
-      var absorMarker = new BMapGL.Marker(new BMapGL.Point(this.transInfo.absorLng, this.transInfo.absorLat), { icon: absorIcon })
-      this.map.addOverlay(absorMarker)
+      this.$bdMap.markerPoint(this.map,{
+        lat:this.transData.absorLat,
+        lng:this.transData.absorLng,
+        icon:require('@/assets/point-absor.png'),
+      })
       // 创建消纳场多边形，如果存在消纳场多边形数据
       if(this.transInfo.absorFence && this.transInfo.absorFence.length > 0)
-        this.$bdMap.drawPolygon(this.map, this.transInfo.absorFence, 2)
+        this.$bdMap.markerPolygon(this.map, this.transInfo.absorFence, 2)
 
       // 绘制线路，如果存在已绘制线路数据，并将返回的线路overlay对象进行存储，方便后期进行清除
-      if(this.transInfo.transLine && this.transInfo.transLine.length > 0) 
-        this.existOverlay = this.$bdMap.drawPolyline(this.map, this.transInfo.transLine)
-    },
-
-    /* 返回百度地图数组坐标点*/
-    returnMapArr(arr) {
-      let reArr = [];
-      arr.forEach((item, index) => {
-        reArr.push(new BMapGL.Point(item.lng, item.lat))
-      })
-      return reArr
+      if(this.transInfo.transLine && this.transInfo.transLine.length > 0)
+        this.existOverlay = this.$bdMap.markerPolyline(this.map, this.transInfo.transLine)
     },
 
     /* 保存绘制线路*/

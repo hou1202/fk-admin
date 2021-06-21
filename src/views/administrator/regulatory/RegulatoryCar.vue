@@ -1299,7 +1299,6 @@ export default {
       this.map.centerAndZoom(point, 12) // 创建中心点坐标及地图层级
       this.map.enableScrollWheelZoom(true)
       this.map.setMapStyleV2({
-        // styleId: 'b8a052b31095117a66964e34d911f25a'
         styleJson: this.mapStyle
       })
       this.setMarker()
@@ -1315,10 +1314,14 @@ export default {
       // 循环数据，创建标注
       this.carData.forEach((item, index) => {
         item.carList.forEach((itemC, indexC) => {
-          // 创建Marker自定义标注图标
-          var myIcon = new BMapGL.Icon(this.carImg[itemC.gpsStatus], new BMapGL.Size(35, 31))
-          var marker = new BMapGL.Marker(new BMapGL.Point(itemC.lng, itemC.lat), { icon: myIcon })
-          this.map.addOverlay(marker)
+          // 创建车辆标注图标
+          this.$bdMap.markerPoint(this.map,{
+            width: 35,
+            height: 31,
+            lat:itemC.lat,
+            lng:itemC.lng,
+            icon:this.carImg[itemC.gpsStatus],
+          })
         })
       })
     },
@@ -1333,22 +1336,19 @@ export default {
       this.map.centerAndZoom(point, 13)
 
       // 创建起终点标注
-      var startIcon = new BMapGL.Icon(this.startImg, new BMapGL.Size(30, 36))
-      var startMarker = new BMapGL.Marker(new BMapGL.Point(this.trajectory[0].lng, this.trajectory[0].lat), { icon: startIcon })
-      var endIcon = new BMapGL.Icon(this.endImg, new BMapGL.Size(30, 36))
-      var endMarker = new BMapGL.Marker(new BMapGL.Point(this.trajectory[this.trajectory.length - 1].lng, this.trajectory[this.trajectory.length - 1].lat), { icon: endIcon })
-      this.map.addOverlay(startMarker)
-      this.map.addOverlay(endMarker)
+      this.$bdMap.markerPoint(this.map,{
+        lat:this.trajectory[0].lat,
+        lng:this.trajectory[0].lng,
+        icon:require('@/assets/point-start.png'),
+      })
+      this.$bdMap.markerPoint(this.map,{
+        lat:this.trajectory[this.trajectory.length - 1].lat,
+        lng:this.trajectory[this.trajectory.length - 1].lng,
+        icon:require('@/assets/point-end.png'),
+      })
 
       // 创建线路
-      var lineArr = []
-      this.trajectory.forEach((item, index) => {
-        lineArr.push(new BMapGL.Point(item.lng, item.lat))
-      })
-      var polylineBg = new BMapGL.Polyline(lineArr, { strokeColor: '#fff', strokeWeight: 8, strokeOpacity: 0.8 })
-      var polyline = new BMapGL.Polyline(lineArr, { strokeColor: '#67C23A', strokeWeight: 4, strokeOpacity: 0.8 })
-      this.map.addOverlay(polylineBg)
-      this.map.addOverlay(polyline)
+      this.$bdMap.markerPolyline(this.map, this.trajectory)
     },
 
     /* 选择查询日期*/
