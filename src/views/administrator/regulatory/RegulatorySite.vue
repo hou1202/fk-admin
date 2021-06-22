@@ -1329,10 +1329,9 @@ export default {
   },
   created() {
     this.treeData = this.list
-    setTimeout(() => {
-      // 延时执行初始化地图
+    this.$nextTick(() => {
       this.initMap()
-    }, 500)
+    })
   },
 
   methods: {
@@ -1457,13 +1456,7 @@ export default {
 
     /* 初始化地图*/
     initMap() {
-      this.map = new BMapGL.Map('allmap')
-      var point = new BMapGL.Point(117.028161, 32.635982)
-      this.map.centerAndZoom(point, 12) // 创建中心点坐标及地图层级
-      this.map.enableScrollWheelZoom(true)
-      this.map.setMapStyleV2({
-        styleJson: this.mapStyle
-      })
+      this.map = this.$bdMap.initBPGL({tier: 12})
       this.setMarker()
     },
 

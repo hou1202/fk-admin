@@ -300,8 +300,6 @@ export default {
         offline: require('@/assets/car-offline-small.png'),
         abnormal: require('@/assets/car-abnormal-small.png')
       },
-      startImg: require('@/assets/point-start.png'),
-      endImg: require('@/assets/ponit-end.png'),
       carData: [],
       // 公司及车辆树结构数据
       list: [
@@ -1182,10 +1180,9 @@ export default {
   created() {
     this.carData = this.list
     this.initCountDate()
-    setTimeout(() => {
-      // 延时执行初始化地图
+    this.$nextTick(() => {
       this.initMap()
-    }, 500)
+    })
   },
 
   methods: {
@@ -1294,13 +1291,7 @@ export default {
 
     /* 初始化地图*/
     initMap() {
-      this.map = new BMapGL.Map('allmap')
-      var point = new BMapGL.Point(117.028161, 32.635982)
-      this.map.centerAndZoom(point, 12) // 创建中心点坐标及地图层级
-      this.map.enableScrollWheelZoom(true)
-      this.map.setMapStyleV2({
-        styleJson: this.mapStyle
-      })
+      this.map = this.$bdMap.initBPGL({ tier: 12 })
       this.setMarker()
     },
 
@@ -1315,12 +1306,12 @@ export default {
       this.carData.forEach((item, index) => {
         item.carList.forEach((itemC, indexC) => {
           // 创建车辆标注图标
-          this.$bdMap.markerPoint(this.map,{
+          this.$bdMap.markerPoint(this.map, {
             width: 35,
             height: 31,
-            lat:itemC.lat,
-            lng:itemC.lng,
-            icon:this.carImg[itemC.gpsStatus],
+            lat: itemC.lat,
+            lng: itemC.lng,
+            icon: this.carImg[itemC.gpsStatus]
           })
         })
       })
@@ -1336,15 +1327,15 @@ export default {
       this.map.centerAndZoom(point, 13)
 
       // 创建起终点标注
-      this.$bdMap.markerPoint(this.map,{
-        lat:this.trajectory[0].lat,
-        lng:this.trajectory[0].lng,
-        icon:require('@/assets/point-start.png'),
+      this.$bdMap.markerPoint(this.map, {
+        lat: this.trajectory[0].lat,
+        lng: this.trajectory[0].lng,
+        icon: require('@/assets/point-start.png')
       })
-      this.$bdMap.markerPoint(this.map,{
-        lat:this.trajectory[this.trajectory.length - 1].lat,
-        lng:this.trajectory[this.trajectory.length - 1].lng,
-        icon:require('@/assets/point-end.png'),
+      this.$bdMap.markerPoint(this.map, {
+        lat: this.trajectory[this.trajectory.length - 1].lat,
+        lng: this.trajectory[this.trajectory.length - 1].lng,
+        icon: require('@/assets/point-end.png')
       })
 
       // 创建线路

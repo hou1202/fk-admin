@@ -190,6 +190,32 @@ export const asyncRoutes = [
     },
     children: [
       {
+        path: 'approval',
+        component: () => import('@/views/administrator/approval/ApprovalList'),
+        name: 'Approval',
+        meta: {
+          title: '审批管理'
+        },
+        children: [
+          {
+            path: 'approvalList',
+            component: () => import('@/views/administrator/approval/ApprovalList'),
+            name: 'ApprovalList',
+            meta: {
+              title: '待审批'
+            }
+          },
+          {
+            path: 'approvalRecord',
+            component: () => import('@/views/administrator/approval/ApprovalRecord'),
+            name: 'ApprovalRecord',
+            meta: {
+              title: '审批记录'
+            }
+          },
+        ]
+      },
+      {
         path: 'noticeList',
         component: () => import('@/views/administrator/notice/NoticeList'),
         name: 'NoticeList',

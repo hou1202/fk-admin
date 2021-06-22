@@ -3,12 +3,50 @@ import Vue from 'vue'
 
 /* 定义通过键值对对象 */
 const defaultPoints = {
-  lat: 32.637563,
+  el: 'allmap', // 地图容器
+  lat: 32.637563, // 中心坐标经纬度
   lng: 117.026724,
-  icon: require('/src/assets/point-default.png'),
-  width: 30,
-  height: 36,
-  enClear: true,
+  tier: 16, // 地图缩放层级
+  icon: require('/src/assets/point-default.png'), // 标注物图标
+  width: 30, // 标注物宽度
+  height: 36, // 标注物高度
+  enClear: true, // 是否在调用map.clearOverlays清除此覆盖物
+  zoom: true, // 是否开启滚轮缩放
+  isStyle: true, // 是否开启自定义地图样式
+  style: require('@/assets/map-json/base_map_config.json') // 自定义地图样式文件
+
+}
+
+const initBPGL = (Options) => {
+  /* 初始化参数*/
+  const opt = defaultPoints
+
+  if (Options.el) { opt.el = Options.el }
+
+  // 标注物坐标经纬度
+  if (Options.lat && Options.lng) {
+    opt.lat = Options.lat
+    opt.lng = Options.lng
+  }
+  if (Options.tier) { opt.tier = Options.tier }
+
+  if (Options.zoom) { opt.style = Options.zoom }
+
+  if (Options.isStyle) { opt.isStyle = Options.isStyle }
+
+  if (Options.style) { opt.style = Options.style }
+
+  const map = new BMapGL.Map(opt.el)
+  var points = new BMapGL.Point(opt.lng, opt.lat)
+  map.centerAndZoom(points, opt.tier) // 创建中心点坐标及地图层级
+  map.enableScrollWheelZoom(opt.zoom)
+  if (opt.isStyle) {
+    map.setMapStyleV2({ // 加载自定义地图样式
+      styleJson: opt.style
+    })
+  }
+
+  return map
 }
 
 /** 在百度地图上添加标注物
@@ -24,41 +62,39 @@ const defaultPoints = {
  **/
 const markerPoint = (map, Options) => {
   /* 初始化参数*/
-  let o = Options;
-  let Option = defaultPoints;
+  const opt = defaultPoints
 
   // 标注物坐标经纬度
-  if(o.lat && o.lng) {
-    Option.lat = o.lat
-    Option.lng = o.lng
+  if (Options.lat && Options.lng) {
+    opt.lat = Options.lat
+    opt.lng = Options.lng
   }
   // 标注物宽高
-  if(o.width && o.height) {
-    Option.widht = o.width
-    Option.height = o.height
+  if (Options.width && Options.height) {
+    opt.widht = Options.width
+    opt.height = Options.height
   }
   // 标注物图标
-  if(o.icon) {
-    Option.icon = o.icon
+  if (Options.icon) {
+    opt.icon = Options.icon
   }
   // 是否在调用map.clearOverlays清除此覆盖物
-  if(typeof(o.enClear) !== 'undefined' && o.enClear == false) {
-    Option.enClear = false
-  }else{
-    Option.enClear = true
+  if (typeof (Options.enClear) !== 'undefined' && Options.enClear == false) {
+    opt.enClear = false
+  } else {
+    opt.enClear = true
   }
 
   /* 进行地图标注*/
-  var pointIcon = new BMapGL.Icon(Option.icon, new BMapGL.Size(Option.width, Option.height))
-  var markers = new BMapGL.Marker(new BMapGL.Point(Option.lng, Option.lat), {
+  var pointIcon = new BMapGL.Icon(opt.icon, new BMapGL.Size(opt.width, opt.height))
+  var markers = new BMapGL.Marker(new BMapGL.Point(opt.lng, opt.lat), {
     icon: pointIcon,
-    enableMassClear: Option.enClear,
+    enableMassClear: opt.enClear
   })
   map.addOverlay(markers)
 
   return markers
 }
-
 
 /** 在百度地图上绘制多边形
  * @param {object}          map         百度地图的实例化对象
@@ -69,30 +105,30 @@ const markerPoint = (map, Options) => {
  * @return {object}   返回多边形overlay对象
  **/
 const markerPolygon = (map, points, typeColor = 1, enClear = false) => {
-  let objArr = [];
+  const objArr = []
   points.forEach((item, index) => {
     objArr.push(new BMapGL.Point(item.lng, item.lat))
   })
 
-  let colors = '#409EFF';
-  if (typeColor == 1){
+  let colors = '#409EFF'
+  if (typeColor == 1) {
     colors = '#409EFF'
-  } else if(typeColor == 2){
+  } else if (typeColor == 2) {
     colors = '#F56C6C'
-  } else if(typeof typeColor === 'string' && typeColor.substring(0, 1) == "#") {
+  } else if (typeof typeColor === 'string' && typeColor.substring(0, 1) == '#') {
     colors = typeColor
   } else {
-    return {code: 201, msg: '边线颜色参数有误'}
+    return { code: 201, msg: '边线颜色参数有误' }
   }
   var polygon = new BMapGL.Polygon(objArr, {
-      strokeColor: colors,          // 边线颜色
-      strokeWeight: 2,              // 边线的宽度
-      strokeOpacity: 0.5,           // 边线透明度
-      fillColor: colors,            // 填充颜色
-      fillOpacity: 0.7,             // 填充透明度
-      enableMassClear: enClear,     //是否在调用clearOverlays清除此覆盖物，默认为true
-  });
-  map.addOverlay(polygon);
+    strokeColor: colors, // 边线颜色
+    strokeWeight: 2, // 边线的宽度
+    strokeOpacity: 0.5, // 边线透明度
+    fillColor: colors, // 填充颜色
+    fillOpacity: 0.7, // 填充透明度
+    enableMassClear: enClear // 是否在调用clearOverlays清除此覆盖物，默认为true
+  })
+  map.addOverlay(polygon)
 
   return polygon
 }
@@ -117,14 +153,12 @@ const markerPolyline = (map, points, bgColor = '#fff', beColor = '#67C23A') => {
   return [polylineBg, polyline]
 }
 
-
-
-
 export default function(Vue) {
   // 添加全局API
   Vue.prototype.$bdMap = {
+    initBPGL,
     markerPoint,
     markerPolygon,
-    markerPolyline,
+    markerPolyline
   }
 }
