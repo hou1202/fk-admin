@@ -1,11 +1,11 @@
 <template>
 
-  <!-- 若需使用合并单元格，即在引用时给单元格加上width即可，为%-->
-  <div class="self-td" :class="[url ? tdImg : '']" :style="tdStyle">
+  <!-- 若需使用合并单元格，即在引用时给merge属性-->
+  <div class="self-td" :class="[type === 'img' ? tdImg : '']" :style="tdStyle">
     <p class="self-td-title">{{ label }}</p>
 
     <!-- 图片表格-->
-    <div v-if="url" class="self-td-cont">
+    <div v-if="type === 'img'" class="self-td-cont">
       <showImg :url-str="url" />
     </div>
 
@@ -30,13 +30,26 @@
 export default {
   name: 'FkTd',
   // 如果有传URL值，则使用图片表格，若无，则使用文字表格
-  props: ['label', 'url', 'merge', 'colors'],
+  props: {
+    label: String,
+    url: String,
+    merge: {
+      type: Boolean,
+      default : false,
+    },
+    type: {
+      /* type类型为两种：text=>文本（默认值）；img=>图片*/
+      type: String,
+      default: 'text',
+    },
+    colors: String
+  },
   data() {
     return {
       tdImg: 'self-td-img',
       tdStyle: {},
       pStyle: {},
-      pColor: ''
+      pColor: '',
     }
   },
   created() {
@@ -65,7 +78,8 @@ export default {
       this.tdStyle = { width: '100%' }
     }
   },
-  methods: {}
+  methods: {},
+
 
 }
 </script>

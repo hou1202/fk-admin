@@ -52,17 +52,17 @@
             <selfTd v-if="siteData.approvalStatus == 'rejected'" label="驳回说明" merge="true" colors="red">{{ siteData.regectInfo }}</selfTd>
             <template v-if="siteData.approvalStatus != 'agree'">
               <!-- 附件图片-->
-              <selfTd label="运输合同" :url="siteData.tranContractFile" />
-              <selfTd label="施工许可证" :url="siteData.tranContractFile" />
-              <selfTd label="承诺书" :url="siteData.tranContractFile" />
-              <selfTd label="出土方证明" :url="siteData.tranContractFile" />
-              <selfTd label="调车单" :url="siteData.tranContractFile" />
-              <selfTd label="运输申请函" :url="siteData.tranContractFile" />
+              <selfTd label="运输合同" type='img' :url="siteData.tranContractFile" />
+              <selfTd label="施工许可证" type='img' :url="siteData.workLicenseFile" />
+              <selfTd label="承诺书" type='img' :url="siteData.promiseFile" />
+              <selfTd label="出土方证明" type='img' :url="siteData.siteFreeProveFile" />
+              <selfTd label="调车单" type='img' :url="siteData.shuntingFile" />
+              <selfTd label="运输申请函" type='img' :url="siteData.tranApplyFile" />
               <template v-if="siteData.tranType == 'external'">
-                <selfTd label="消纳场证明" :url="siteData.tranContractFile" />
-                <selfTd label="收土点证明" :url="siteData.tranContractFile" />
+                <selfTd label="消纳场证明" type='img' :url="siteData.absorProveFile" />
+                <selfTd label="收土点证明" type='img' :url="siteData.absorFreeProveFile" />
               </template>
-              <selfTd label="其他附件" :url="siteData.tranContractFile" style="width:100%" />
+              <selfTd label="其他附件" type='img' :url="siteData.otherFile" style="width:100%" />
             </template>
           </selfTable>
         </el-tab-pane>
@@ -169,11 +169,11 @@ export default {
         tranStartDate: '2021--02-15', // 申请运输开始日期
         tranEndDate: '2021-03-15', // 申请运输结束日期
         promiseFile: '1', // 承诺书附件
-        shuntingFile: '1', // 调车单附件
-        siteFreeProveFile: '1', // 出土点不收费证明附件
-        tranContractFile: '1', // 运输合同附件
+        shuntingFile: '2', // 调车单附件
+        siteFreeProveFile: '3', // 出土点不收费证明附件
+        tranContractFile: '0,1,2', // 运输合同附件
         workLicenseFile: '1', // 施工许可证附件
-        tranApplyFile: '1', // 运输申请函附件
+        tranApplyFile: '', // 运输申请函附件
         otherFile: '', // 其他附件
 
         absorId: '5', 		// 消纳场ID
@@ -182,8 +182,8 @@ export default {
         absorAddress: '安徽省淮南市谢家集区X009(黄歇路)',	//
         absorEnterprise: '淮南市政',
         submitTranRoad: '上海路-北京路-重庆路', // 提交外运线路
-        absorProveFile: '1', // 消纳场证明附件
-        absorFreeProveFile: '1', // 收土点不收费证明附件
+        absorProveFile: '2', // 消纳场证明附件
+        absorFreeProveFile: '3', // 收土点不收费证明附件
         // 提交车辆列表
         items: [
           { id: 1, carNum: '皖D38339', company: '淮南市诚安土石方工程有限公司', carType: '新型环保车', useType: '自有车辆', status: '正常' },

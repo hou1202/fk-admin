@@ -6,6 +6,20 @@
   "description": "渣土项目",
   "glyphs": [
     {
+      "icon_id": "1319970",
+      "name": "人",
+      "font_class": "-zt-ren",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "20341339",
+      "name": "箭头",
+      "font_class": "-zt-jiantou",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
       "icon_id": "2166579",
       "name": "关闭",
       "font_class": "-zt-closed-full",

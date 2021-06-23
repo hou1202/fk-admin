@@ -57,7 +57,7 @@
     </el-table>
     <!-- 分页-->
     <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
-    <ApprovalTransRecord v-model="showApprovalTransRecord"></ApprovalTransRecord>
+    <ApprovalTransRecord v-model="showApprovalTransRecord" :approvalInfo="approvalInfo"></ApprovalTransRecord>
   </div>
 </template>
 
@@ -91,6 +91,7 @@ export default {
         title: '',
         create_time: ''
       },
+      approvalInfo: null,
     }
   },
   created() { },
@@ -100,7 +101,7 @@ export default {
     },
 
     handleApproval(row) {
-      console.log(row)
+      this.approvalInfo = row
       switch(row.processName) {
         case '运输作业备案' :
           this.showApprovalTransRecord = true;
