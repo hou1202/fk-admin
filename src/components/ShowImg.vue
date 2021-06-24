@@ -3,6 +3,7 @@
   <div>
     <div v-for="(item, index) in urlList" class="demo-image__preview self-img">
       <el-image
+        :style="{width:popWidth,height:popHeight}"
         :src="urlList[index]"
         :preview-src-list="urlList"
       />
@@ -13,7 +14,20 @@
 <script>
 export default {
   name: 'ShowImg',
-  props: ['urlStr'],
+  /** props 参数解析
+   *  urlStr    图片地址字符串，如果是多张图片是，以约定字符进行分割，如：，，
+   *  width     图片的展示宽度，展示时图片为正方形，若不传值时，默认值为60
+  */
+  props: {
+    urlStr: {
+      style: String,
+      defalut: '',
+    },
+    width: {
+      style: String,
+      default: '60',
+    }
+  },
   data() {
     return {
       testList: [
@@ -26,6 +40,24 @@ export default {
       urlList: [],
     }
   },
+  computed: {
+    /* 图片宽度*/
+    popWidth() {
+      if(this.width !== 60){
+        return (parseInt(this.width)+5)+'px';
+      }else {
+        return (60+5)+'px';
+      }
+    },
+    /* 图片高度*/
+   popHeight() {
+      if(this.width !== 60){
+        return (parseInt(this.width)+7)+'px';
+      }else {
+        return (60+7)+'px';
+      }
+    },
+  },
   created() {
     /* 传过来的图片地址，对地址进行处理*/
     if(this.urlStr) {
@@ -36,9 +68,28 @@ export default {
         this.urlList.push(this.testList[index]);
       })
     }
-  }
+  },
 }
 </script>
-<style scoped>
+<style lang="scss" >
+.self-img {
+  display:inline-block;
+  .el-image {
+    padding: 5px 0 2px 5px;
+    .el-image__inner {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #dfe6ec;
+      border-radius: 3px;
 
+    }
+    .el-image__error {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #dfe6ec;
+      border-radius: 3px;
+      margin: 5px 0 2px 5px;
+    }
+  }
+}
 </style>
